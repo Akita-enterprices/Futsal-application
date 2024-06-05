@@ -3,19 +3,40 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const Createaccount: React.FC<{}> = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Your form submission logic goes here
-    console.log("Submitted email:", email);
-    console.log("Submitted password:", password);
+    try {
+      const response = await axios.post('http://localhost:4000/api/auth/signup', {
+        username,
+        email,
+        password,
+        phone,
+      });
+      console.log('Response:', response.data);
+      navigate('/verifyaccount', { state: { phone } });
+      // Handle success (e.g., navigate to another page or show a success message)
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error (e.g., show an error message)
+    }
     // Reset form fields
+    setUsername("");
     setEmail("");
     setPassword("");
+    setPhone("");
   };
+
   return (
     <Box
       sx={{
@@ -53,11 +74,13 @@ const Createaccount: React.FC<{}> = () => {
             <PersonOutlinedIcon color="action" sx={{ marginRight: 1 }} />{" "}
             <TextField
               label="User name"
-              type="name"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
             />
           </Box>
-
           <br />
           <Box>
             {" "}
@@ -71,7 +94,19 @@ const Createaccount: React.FC<{}> = () => {
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
             />
           </Box>
-
+          <br />
+          <Box>
+            {" "}
+            <PhoneOutlinedIcon color="action" sx={{ marginRight: 1 }} />{" "}
+            <TextField
+              label="Phone number"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+            />
+          </Box>
           <br />
           <Box>
             <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />{" "}
@@ -84,19 +119,15 @@ const Createaccount: React.FC<{}> = () => {
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
             />
           </Box>
-
           <br />
-
           <Button
             type="submit"
             variant="contained"
-            href="/verifyaccount"
             sx={{
               bgcolor: "#0F3D3E",
               "&:hover": {
                 bgcolor: "#0F3D3E", // Same color as background
               },
-
               width: {
                 sm: "50%",
                 xs: "50%",

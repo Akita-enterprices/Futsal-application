@@ -3,25 +3,35 @@ import { Box, TextField, Typography, Button } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import axios from "axios"; 
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+ 
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted email:", email);
-    console.log("Submitted password:", password);
+    try {
+      const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); // Send login request
+      console.log("Login successful:", response.data);
+      navigate('/welcome');
+
+    } catch (error) {
+      console.error("Login failed");
+    }
 
     setEmail("");
     setPassword("");
   };
-  const [clicked, setClicked] = useState(false);
 
   const goBack = () => {
-    setClicked(true);
     window.history.back();
   };
+
   return (
     <Box
       sx={{
@@ -46,7 +56,6 @@ const Login: React.FC<{}> = () => {
           alignItems: "left",
         }}
       >
-        {" "}
         <ArrowBackIcon onClick={goBack} sx={{ color: "#007EF2" }} />
       </Box>
 
@@ -74,21 +83,18 @@ const Login: React.FC<{}> = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              // required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
             />
           </Box>
 
           <br />
           <Box>
-            {" "}
             <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />
             <TextField
               label="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              // required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
             />
           </Box>
@@ -100,19 +106,17 @@ const Login: React.FC<{}> = () => {
           <br />
           <Button
             type="submit"
-            href="/welcome"
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
-
               width: {
                 sm: "50%",
                 xs: "50%",
-              }, // Add margin top for spacing
+              },
               borderRadius: 2,
               mb: 2,
               "&:hover": {
-                bgcolor: "#0F3D3E", // Same color as background
+                bgcolor: "#0F3D3E",
               },
             }}
           >
@@ -131,4 +135,5 @@ const Login: React.FC<{}> = () => {
     </Box>
   );
 };
+
 export default Login;
