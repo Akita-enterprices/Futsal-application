@@ -1,27 +1,52 @@
-import { useState } from "react";
-import { Box, TextField, Typography, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, TextField, Typography, Button, InputAdornment } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+// Mock function to validate email and password
+const validateCredentials = (email: string, password: string) => {
+  // This is a mock validation. Replace with actual API call in production.
+  const registeredUsers = [
+    { email: "user1@example.com", password: "password123" },
+    { email: "user2@example.com", password: "password456" },
+  ];
+
+  return registeredUsers.some(
+    (user) => user.email === email && user.password === password
+  );
+};
+
 const Login: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted email:", email);
-    console.log("Submitted password:", password);
 
+    if (validateCredentials(email, password)) {
+      console.log("Submitted email:", email);
+      console.log("Submitted password:", password);
+      setError(""); // Clear any previous error
+
+      // Proceed with successful login actions, like redirecting to a welcome page
+      window.location.href = "/welcome";
+    } else {
+      setError("Invalid email or password. Please try again.");
+    }
+
+    // Reset the form fields
     setEmail("");
     setPassword("");
   };
-  const [clicked, setClicked] = useState(false);
 
+  // Handle back button click
   const goBack = () => {
-    setClicked(true);
     window.history.back();
   };
+
   return (
     <Box
       sx={{
@@ -39,14 +64,13 @@ const Login: React.FC<{}> = () => {
     >
       <Box
         sx={{
-          width: { sm: "42%", xs: "100%" },
+          width: { sm: "42%", xs: "90%" },
           display: "flex",
           flexDirection: "row",
           justifyContent: "left",
           alignItems: "left",
         }}
       >
-        {" "}
         <ArrowBackIcon onClick={goBack} sx={{ color: "#007EF2" }} />
       </Box>
 
@@ -68,67 +92,73 @@ const Login: React.FC<{}> = () => {
       >
         <form onSubmit={handleSubmit}>
           <Box>
-            <EmailOutlinedIcon color="action" sx={{ marginRight: 1 }} />
             <TextField
-              label="Email address"
+              placeholder="Email address"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              // required
+              required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailOutlinedIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
-
-          <br />
           <Box>
-            {" "}
-            <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />
             <TextField
-              label="Password"
+              placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              // required
+              required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <VpnKeyOutlinedIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
-
-          <br />
+          {error && (
+            <Typography sx={{ color: "red", mb: 2 }}>{error}</Typography>
+          )}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
           </Typography>
-          <br />
           <Button
             type="submit"
-            href="/welcome"
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
-
-              width: {
-                sm: "50%",
-                xs: "50%",
-              }, // Add margin top for spacing
-              borderRadius: 2,
-              mb: 2,
               "&:hover": {
                 bgcolor: "#0F3D3E", // Same color as background
               },
+              width: {
+                sm: "50%",
+                xs: "50%",
+              },
+              borderRadius: 2,
+              mb: 2,
             }}
           >
             Login
           </Button>
-
           <Typography sx={{ opacity: "35%", textAlign: "center" }}>
             _______ Or continue with ______
           </Typography>
         </form>
       </Box>
-      <br />
       <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
         Does have an account? <a href="/createaccount">signUp</a>
       </Typography>
     </Box>
   );
 };
+
 export default Login;
