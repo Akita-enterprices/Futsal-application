@@ -1,10 +1,44 @@
-import React from "react";
-import { Box, TextField, Typography } from "@mui/material";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 import SearchIcon from "@mui/icons-material/Search";
 import Courtcard from "../component/courtcard";
 
 const Nearcourt: React.FC<{}> = () => {
+  const [clicked, setClicked] = useState(false);
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    width: '100%',
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+    },
+  }));
+
   return (
     <Box
       sx={{
@@ -18,87 +52,106 @@ const Nearcourt: React.FC<{}> = () => {
         fontSize: "1.5rem",
         fontWeight: "bold",
         maxWidth: "100%",
+        padding: 2,
       }}
     >
       <Box
         sx={{
-          width: { sm: "50%", xs: "100" },
-
-          height: "100%",
+          width: { sm: "50%", xs: "100%" },
+          textAlign: "center",
         }}
       >
-        <Typography
+        <Box
           sx={{
-            mt: 3,
-            ml: { sm: 15, xs: 5 },
-            fontWeight: "bold",
-            fontSize: { sm: "30px", xs: "20px" },
+            width: { sm: "60%", xs: "85%" },
+            marginTop: 1,
+            marginLeft: { sm: 8, xs: 'auto' },
+            marginRight: { sm: 0, xs: 'auto' },
+            textAlign: "left",
           }}
         >
-          Location
-        </Typography>
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            textAlign: "center",
-            fontSize: { sm: "35px", xs: "20px" },
-          }}
-        >
-          Gampola
-        </Typography>
-        <Box sx={{ textAlign: "center" }}>
-          <TextField
+          <Typography
             sx={{
-              ml: 5,
-              width: { sm: "50%", xs: "65%" },
-              bgcolor: "#D9D9D9",
-              borderRadius: 3,
-              "& .MuiInputBase-input": {
-                // Targeting the input element
-                paddingTop: "8px", // Adjust top padding
-                paddingBottom: "8px", // Adjust bottom padding
-                fontSize: "0.875rem", // Adjust font size
-              },
+              fontWeight: "bold",
+              fontSize: { sm: "28px", xs: "20px" },
             }}
-            InputProps={{
-              startAdornment: <CalendarTodayIcon sx={{ marginRight: 1 }} />,
-            }}
-          />
-          <br />
-          <br />
-          <TextField
-            name="search"
+          >
+            Gampola
+          </Typography>
+          <Typography
             sx={{
-              width: { sm: "70%", xs: "100%" },
-
-              bgcolor: "#D9D9D9",
-              borderRadius: 2,
-              "& .MuiInputBase-input": {
-                // Targeting the input element
-                paddingTop: "8px", // Adjust top padding
-                paddingBottom: "8px", // Adjust bottom padding
-                fontSize: "0.875rem", // Adjust font size
-              },
+              marginLeft: 1,
+              paddingTop: "4px",
+              paddingBottom: "8px",
+              fontSize: "0.8rem",
             }}
-            InputProps={{
-              startAdornment: <SearchIcon sx={{ marginRight: 1 }} />,
-            }}
-          />
+          >
+            10/12/2023
+          </Typography>
         </Box>
         <br />
-        <Typography
+        <Box
           sx={{
-            fontWeight: "bold",
-            fontSize: { sm: "20px", xs: "20px" },
+            textAlign: "center",
+            mt: 2,
+            width: { sm: "75%", xs: "80%" },
+            margin: '0 auto',
+            bgcolor: "#D9D9D9",
+            borderRadius: 3,
           }}
         >
-          Near court
-        </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <Courtcard />
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search court name"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+        </Box>
+        <br />
+        <Box sx={{ width: { sm: "40%", xs: "40%" } }}>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: { sm: "20px", xs: "20px" },
+              marginTop: 2,
+            }}
+          >
+            Near court
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            alignItems: "flex-start",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: { sm: "row", xs: "row" },
+            mt: 2,
+            width:{sm:"auto",xs:"500px"}
+         
+          }}
+        >
+          <Courtcard
+            rating={4.5}
+            link="/courtdetails/1"
+            title="CIB Court"
+            description="Gampola Town, Gampola"
+            price="$ RS 35000"
+          />
+          <Courtcard
+            rating={4.2}
+            link="/courtdetails/2"
+            title="ACML Court"
+            description="Gampola Town, Gampola"
+            price="$ RS 35000"
+          />
+          
         </Box>
       </Box>
     </Box>
   );
 };
+
 export default Nearcourt;
