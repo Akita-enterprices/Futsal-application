@@ -59,7 +59,7 @@ const Welcome: React.FC<{}> = () => {
 
           <TextField
             type="text"
-            label="Enter location..."
+            placeholder="Enter location..."
             sx={{ bgcolor: "#d9dadb", borderRadius: 2, width: "100%" }}
             InputProps={{
               startAdornment: <LocationOnIcon />,
@@ -85,7 +85,7 @@ const Welcome: React.FC<{}> = () => {
             </Typography>
 
             <TextField
-              label="DD/MM/YY"
+              placeholder="DD/MM/YY"
               sx={{
                 ml: 5,
                 width: "70%",
