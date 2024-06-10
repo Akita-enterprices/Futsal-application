@@ -10,5 +10,13 @@
     "Courtdetails":"/courtdetails",
     "Bookingsummary":"/Bookingsummary",
     "Payment":"/Payment",
-    "Congrats":"/Congrats"
+    "Congrats":"/Congrats",
+    "CreateAdminAccount":"/CreateAdminAccount",
+    "LoginAdmin":"/LoginAdmin",
+    "VerifyAdminAccount":"./VerifyAdminAccount",
+    "Register":"./Register",
+    "HomePage":"./HomePage",
+    "Booking":"./Booking",
+    "Availability":"./Availability",
+    "Review":"./Review"
 }

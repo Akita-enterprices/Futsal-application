@@ -142,7 +142,7 @@ const Nearcourt: React.FC<{}> = () => {
           />
           <Courtcard
             rating={4.2}
-            link="/courtdetails/2"
+            link="/courtdetails"
             title="ACML Court"
             description="Gampola Town, Gampola"
             price="$ RS 35000"

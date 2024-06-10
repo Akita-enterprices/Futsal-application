@@ -17,7 +17,7 @@ const validateCredentials = (email: string, password: string) => {
   );
 };
 
-const Login: React.FC<{}> = () => {
+const LoginAdmin: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -130,7 +130,7 @@ const Login: React.FC<{}> = () => {
           )}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
-          </Typography><br/>
+          </Typography>
           <Button
             type="submit"
             variant="contained"
@@ -156,29 +156,9 @@ const Login: React.FC<{}> = () => {
       </Box>
       <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
         Does have an account? <a href="/createaccount">signUp</a>
-      </Typography><br/>
-      <Button
-            type="submit"
-            href="/createAdminaccount"
-            variant="contained"
-            sx={{
-              bgcolor: "gray",
-              "&:hover": {
-                bgcolor: "gray"
-              },
-              width: {
-                sm: "10%",
-                xs: "50%",
-              },
-              borderRadius: 2,
-              mb: 2,
-            }}
-          >
-           ADMIN
-          </Button>
-
+      </Typography>
     </Box>
   );
 };
 
-export default Login;
+export default LoginAdmin;
