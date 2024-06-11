@@ -3,6 +3,8 @@ import { Box, TextField, Typography, Button, InputAdornment } from "@mui/materia
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import axios from "axios"; 
+import { useNavigate } from 'react-router-dom';
 
 // Mock function to validate email and password
 const validateCredentials = (email: string, password: string) => {
@@ -18,13 +20,24 @@ const validateCredentials = (email: string, password: string) => {
 };
 
 const Login: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); // Send login request
+      console.log("Login successful:", response.data);
+      navigate('/welcome');
+
+    } catch (error) {
+      console.error("Login failed");
+    }
+
 
     if (validateCredentials(email, password)) {
       console.log("Submitted email:", email);
@@ -97,7 +110,9 @@ const Login: React.FC<{}> = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+
               required
+
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -109,12 +124,17 @@ const Login: React.FC<{}> = () => {
             />
           </Box>
           <Box>
+
+            <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />
+
             <TextField
               placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+
               required
+
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -136,15 +156,19 @@ const Login: React.FC<{}> = () => {
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
+
               "&:hover": {
                 bgcolor: "#0F3D3E", // Same color as background
               },
+
               width: {
                 sm: "50%",
                 xs: "50%",
               },
               borderRadius: 2,
               mb: 2,
+
+
             }}
           >
             Login

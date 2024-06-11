@@ -4,18 +4,39 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 const Createaccount: React.FC<{}> = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Your form submission logic goes here
-    console.log("Submitted email:", email);
-    console.log("Submitted password:", password);
+    try {
+      const response = await axios.post('http://localhost:4000/api/auth/signup', {
+        username,
+        email,
+        password,
+        phone,
+      });
+      console.log('Response:', response.data);
+      navigate('/verifyaccount', { state: { phone } });
+      // Handle success (e.g., navigate to another page or show a success message)
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error (e.g., show an error message)
+    }
     // Reset form fields
+    setUsername("");
     setEmail("");
     setPassword("");
+    setPhone("");
   };
 
   return (
@@ -51,8 +72,10 @@ const Createaccount: React.FC<{}> = () => {
         <form onSubmit={handleSubmit}>
           <Box>
             <TextField
+
               placeholder="User name"
               type="name"
+
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -63,6 +86,8 @@ const Createaccount: React.FC<{}> = () => {
               }}
             />
           </Box>
+
+          <br />
 
           <Box>
             <TextField
@@ -82,6 +107,21 @@ const Createaccount: React.FC<{}> = () => {
             />
           </Box>
 
+          <br />
+          <Box>
+            {" "}
+            <PhoneOutlinedIcon color="action" sx={{ marginRight: 1 }} />{" "}
+            <TextField
+              label="Phone number"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+            />
+          </Box>
+          <br />
+
           <Box>
             <TextField
               placeholder="Password"
@@ -100,10 +140,11 @@ const Createaccount: React.FC<{}> = () => {
             />
           </Box>
 
+          <br />
+
           <Button
             type="submit"
             variant="contained"
-            href="/verifyaccount"
             sx={{
               bgcolor: "#0F3D3E",
               "&:hover": {
