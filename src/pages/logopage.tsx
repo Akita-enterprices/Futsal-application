@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Logo from "../Asset/futsal-logo.png";
+import Logo from "../Asset/futsal-logo-colour.png";
 
 const LogoPage: React.FC<{}> = () => {
   const navigate = useNavigate();

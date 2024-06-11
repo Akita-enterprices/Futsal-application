@@ -3,8 +3,6 @@ import { Box, TextField, Typography, Button, InputAdornment } from "@mui/materia
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios"; 
-import { useNavigate } from 'react-router-dom';
 
 // Mock function to validate email and password
 const validateCredentials = (email: string, password: string) => {
@@ -19,25 +17,14 @@ const validateCredentials = (email: string, password: string) => {
   );
 };
 
-const Login: React.FC<{}> = () => {
-  const navigate = useNavigate();
+const LoginAdmin: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); // Send login request
-      console.log("Login successful:", response.data);
-      navigate('/welcome');
-
-    } catch (error) {
-      console.error("Login failed");
-    }
-
 
     if (validateCredentials(email, password)) {
       console.log("Submitted email:", email);
@@ -110,9 +97,7 @@ const Login: React.FC<{}> = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-
               required
-
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -124,17 +109,12 @@ const Login: React.FC<{}> = () => {
             />
           </Box>
           <Box>
-
-            <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />
-
             <TextField
               placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-
               required
-
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -150,25 +130,21 @@ const Login: React.FC<{}> = () => {
           )}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
-          </Typography><br/>
+          </Typography>
           <Button
             type="submit"
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
-
               "&:hover": {
                 bgcolor: "#0F3D3E", // Same color as background
               },
-
               width: {
                 sm: "50%",
                 xs: "50%",
               },
               borderRadius: 2,
               mb: 2,
-
-
             }}
           >
             Login
@@ -180,29 +156,9 @@ const Login: React.FC<{}> = () => {
       </Box>
       <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
         Does have an account? <a href="/createaccount">signUp</a>
-      </Typography><br/>
-      <Button
-            type="submit"
-            href="/createAdminaccount"
-            variant="contained"
-            sx={{
-              bgcolor: "gray",
-              "&:hover": {
-                bgcolor: "gray"
-              },
-              width: {
-                sm: "10%",
-                xs: "50%",
-              },
-              borderRadius: 2,
-              mb: 2,
-            }}
-          >
-           ADMIN
-          </Button>
-
+      </Typography>
     </Box>
   );
 };
 
-export default Login;
+export default LoginAdmin;

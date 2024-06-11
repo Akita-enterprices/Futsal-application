@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Keypad from "../component/keypad"; 
 
-const Verifyaccount: React.FC<{}> = () => {
+const VerifyAdminaccount: React.FC<{}> = () => {
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
 
   const goBack = () => {
@@ -39,7 +38,6 @@ const Verifyaccount: React.FC<{}> = () => {
     setCode(newCode);
   };
 
-
   return (
     <Box
       sx={{
@@ -69,14 +67,13 @@ const Verifyaccount: React.FC<{}> = () => {
       <Typography
         sx={{ fontSize: { sm: "30px", xs: "20px" }, fontWeight: "bold" }}
       >
-        <span style={{ color: "black" }}>Verify</span>{" "}
+        <span style={{ color: "black" }}>Verify</span>
         <span style={{ color: "#E2DCC8" }}>Account</span>
       </Typography>
       <Typography sx={{ opacity: "55%", textAlign: "center" }}>
         Please enter the verification code sent to example@gmail.com
       </Typography>
       <br />
-
       <Box display={"flex"} flexDirection={"row"} mb={2}>
         {code.map((digit, index) => (
           <TextField
@@ -95,14 +92,14 @@ const Verifyaccount: React.FC<{}> = () => {
      <Button
        type="submit"
        variant="contained"
-       href="/welcome"
+       href="/Register"
        sx={{
          bgcolor: "#0F3D3E",
          "&:hover": {
            bgcolor: "#0F3D3E",
          },
          width: {
-           sm: "25%",
+           sm: "30%",
            xs: "50%",
          },
          borderRadius: 2,
@@ -113,13 +110,11 @@ const Verifyaccount: React.FC<{}> = () => {
      </Button><br/>
       <Keypad onDigitClick={handleDigitClick} onCloseClick={handleCloseClick} />
     
-
     </Box>
   );
 };
 
-
-export default Verifyaccount;
+export default VerifyAdminaccount;
 
 
 // import React, { useState } from "react";
@@ -252,5 +247,3 @@ export default Verifyaccount;
 // };
 
 // export default Verifyaccount;
-=======
-
