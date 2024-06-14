@@ -135,7 +135,7 @@ const Nearcourt: React.FC<{}> = () => {
         >
           <Courtcard
             rating={4.5}
-            link="/courtdetails/1"
+            link="/courtdetails"
             title="CIB Court"
             description="Gampola Town, Gampola"
             price="$ RS 35000"

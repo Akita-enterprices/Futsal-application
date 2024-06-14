@@ -18,5 +18,6 @@
     "HomePage":"./HomePage",
     "Booking":"./Booking",
     "Availability":"./Availability",
-    "Review":"./Review"
+    "Review":"./Review",
+    "Profile":"/Profile"
 }

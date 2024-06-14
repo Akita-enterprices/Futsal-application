@@ -50,7 +50,7 @@ const LoginAdmin: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"90vh"},
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -132,6 +132,7 @@ const LoginAdmin: React.FC<{}> = () => {
             <a href="/forgotpassword">Forgot password</a>
           </Typography>
           <Button
+          href="/"
             type="submit"
             variant="contained"
             sx={{
