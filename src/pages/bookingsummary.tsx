@@ -14,7 +14,7 @@ const Bookingsummary: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"100vh"},
         width: { sm: "100%", xs: "100%" },
         justifyContent: "center",
         alignItems: "center",
@@ -166,6 +166,7 @@ const Bookingsummary: React.FC<{}> = () => {
           display: "flex",
           justifyContent: "center", // Center horizontally
           alignItems: "center", // Center vertically
+     
         }}
       >
         <Box
@@ -210,6 +211,7 @@ const Bookingsummary: React.FC<{}> = () => {
           justifyContent: "center",
           alignItems: "center",
           mt: "200px",
+      
         }}
       >
         <Button
@@ -233,7 +235,7 @@ const Bookingsummary: React.FC<{}> = () => {
         >
           Continue to payment
         </Button>
-      </Box>
+      </Box><br/>
     </Box>
   );
 };

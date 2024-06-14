@@ -21,6 +21,7 @@ import HomePage from "./pages/homepage";
 import Booking from "./pages/booking";
 import Availability from "./pages/availability";
 import Review from "./pages/review";
+import Profile from"./pages/profile";
 
 const App: React.FC = () => {
   return (
@@ -47,6 +48,7 @@ const App: React.FC = () => {
           <Route path="/booking" element={<Booking />} /> 
           <Route path="/availability" element={<Availability />} /> 
           <Route path="/review" element={<Review />} /> 
+          <Route path="/profile" element={<Profile/>}/>
 
         </Routes>
       </div>

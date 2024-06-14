@@ -12,7 +12,7 @@ const Payment: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"130vh"},
         width: { sm: "100%", xs: "100%" },
         justifyContent: "center",
         alignItems: "center",
@@ -91,7 +91,7 @@ const Payment: React.FC<{}> = () => {
           <b>Card Holder Name</b>
         </Typography>
         <TextField
-          label="Your Name"
+          placeholder="Your Name"
           type="name"
           sx={{
             mt: 2,

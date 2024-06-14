@@ -309,6 +309,7 @@ const Courtdetails: React.FC<{}> = () => {
           display={"flex"}
           flexDirection={"row"}
           width={{ sm: "100%", xs: "100%" }}
+        
         >
           <Typography fontSize={{ sm: "18px", xs: "11px" }}>
             {" "}
@@ -340,7 +341,7 @@ const Courtdetails: React.FC<{}> = () => {
           >
             Book Now
           </Button>
-        </Box>
+        </Box><br/>
       </Box>
     </Box>
   );

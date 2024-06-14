@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Keypad from "../component/keypad"; 
 
@@ -43,7 +42,7 @@ const Verifyaccount: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"120vh"},
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -252,5 +251,5 @@ export default Verifyaccount;
 // };
 
 // export default Verifyaccount;
-=======
+
 
