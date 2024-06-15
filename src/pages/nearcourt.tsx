@@ -4,6 +4,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from "@mui/icons-material/Search";
 import Courtcard from "../component/courtcard";
+import { Link } from "react-router-dom";
 
 interface Court {
   _id: string;
@@ -164,16 +165,17 @@ const Nearcourt: React.FC<{}> = () => {
           }}
         >
       
-{court.map((court) => (
+      {court.map((court) => (
+          <Link to={`/courtdetails/${court._id}`} key={court._id} style={{ textDecoration: "none" }}>
             <Courtcard
-              key={court._id} 
-              rating={court.rating} 
-              link={`/courtdetails/${court._id}`} 
-              title={court.futsalName} 
-              description={court.address} 
-              price={`$ ${court.dayRate}`} 
+              rating={court.rating}
+              link={`/courtdetails/${court._id}`}
+              title={court.futsalName}
+              description={court.address}
+              price={`$ ${court.dayRate}`}
             />
-          ))}
+          </Link>
+        ))}
           
         </Box>
       </Box>
