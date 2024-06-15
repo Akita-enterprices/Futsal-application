@@ -22,7 +22,7 @@ const Congrats: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"100vh"},
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -101,6 +101,7 @@ const Congrats: React.FC<{}> = () => {
             flexDirection: "column",
             alignItems: "center",
             mt: 2,
+            mb:{sm:0,xs:12}
           }}
         >
           <Button

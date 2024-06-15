@@ -64,7 +64,7 @@ const Login: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: {sm:"100vh",xs:"90vh"},
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -126,6 +126,7 @@ const Login: React.FC<{}> = () => {
           </Box>
           <Box>
 
+           
 
             <TextField
               placeholder="Password"
@@ -152,13 +153,14 @@ const Login: React.FC<{}> = () => {
             <a href="/forgotpassword">Forgot password</a>
           </Typography><br/>
           <Button
+          href="/welcome"
             type="submit"
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
 
               "&:hover": {
-                bgcolor: "#0F3D3E", // Same color as background
+                bgcolor: "#0F3D3E", 
               },
 
               width: {
