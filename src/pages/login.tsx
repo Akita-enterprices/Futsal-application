@@ -3,7 +3,7 @@ import { Box, TextField, Typography, Button, InputAdornment } from "@mui/materia
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios"; 
+import axios from "../utils/axios"; 
 import { useNavigate } from 'react-router-dom';
 
 // Mock function to validate email and password
@@ -30,7 +30,8 @@ const Login: React.FC<{}> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); // Send login request
+      const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); 
+      localStorage.setItem('token', response.data.token)
       console.log("Login successful:", response.data);
       navigate('/welcome');
 
@@ -125,7 +126,6 @@ const Login: React.FC<{}> = () => {
           </Box>
           <Box>
 
-            <VpnKeyOutlinedIcon color="action" sx={{ marginRight: 1 }} />
 
             <TextField
               placeholder="Password"

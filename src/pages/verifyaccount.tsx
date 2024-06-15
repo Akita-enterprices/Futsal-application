@@ -252,5 +252,5 @@ export default Verifyaccount;
 // };
 
 // export default Verifyaccount;
-=======
+
 
