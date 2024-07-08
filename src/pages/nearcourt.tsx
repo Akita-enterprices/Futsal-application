@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from "@mui/icons-material/Search";
 import Courtcard from "../component/courtcard";
+import { Link } from "react-router-dom";
+
+interface Court {
+  _id: string;
+  rating: number;
+  name: string;
+  address: string;
+  dayRate: number;
+  futsalName:string
+  
+  // Add other fields as needed
+}
 
 const Nearcourt: React.FC<{}> = () => {
   const [clicked, setClicked] = useState(false);
+  const [court, setCourt] = useState<Court[]>([]);
+
+  useEffect(() => {
+    const fetchCourts = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/admin"); // Replace with your actual API endpoint
+        if (!response.ok) {
+          throw new Error("Failed to fetch admins");
+        }
+        const data = await response.json();
+        setCourt(data);
+      } catch (error) {
+        console.error("Error fetching admins:", error);
+      }
+    };
+
+    fetchCourts();
+  }, []);
+  console.log("court",court)
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -133,20 +164,18 @@ const Nearcourt: React.FC<{}> = () => {
          
           }}
         >
-          <Courtcard
-            rating={4.5}
-            link="/courtdetails"
-            title="CIB Court"
-            description="Gampola Town, Gampola"
-            price="$ RS 35000"
-          />
-          <Courtcard
-            rating={4.2}
-            link="/courtdetails"
-            title="ACML Court"
-            description="Gampola Town, Gampola"
-            price="$ RS 35000"
-          />
+      
+      {court.map((court) => (
+          <Link to={`/courtdetails/${court._id}`} key={court._id} style={{ textDecoration: "none" }}>
+            <Courtcard
+              rating={court.rating}
+              link={`/courtdetails/${court._id}`}
+              title={court.futsalName}
+              description={court.address}
+              price={`$ ${court.dayRate}`}
+            />
+          </Link>
+        ))}
           
         </Box>
       </Box>

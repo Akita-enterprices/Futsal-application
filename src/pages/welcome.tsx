@@ -1,17 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import axios from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+
 import dayjs, { Dayjs } from "dayjs";
 
-const Welcome: React.FC = () => {
-  const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
-  const [checkInTime, setCheckInTime] = useState<Dayjs | null>(null);
-  const [checkOutTime, setCheckOutTime] = useState<Dayjs | null>(null);
+const Welcome: React.FC<{}> = () => {
+  const navigate = useNavigate();
+  const [isAuthenticated, setAuthenticated] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const verifyToken = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       if (token) {
+  //         await axios.get('/api/auth/me', {
+  //           headers: {
+  //             Authorization: `Bearer ${token}` // Set token in Authorization header
+  //           }
+  //         });
+  //         setAuthenticated(true);
+  //       } else {
+  //         throw new Error('No token found');
+  //       }
+  //     } catch (error) {
+  //       console.log('Verification failed', error);
+  //       navigate('/login');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   verifyToken();
+  // }, [navigate]);
+
+  // if (isLoading) {
+  //   return <Typography>Loading...</Typography>;
+  // }
+  //  if(!isAuthenticated){
+  //   return null;
+  //  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -33,9 +70,9 @@ const Welcome: React.FC = () => {
       >
         <Card
           sx={{
-            width: { sm: "30%", xs: "95%" }, 
-            borderTopLeftRadius: "50px", 
-            borderTopRightRadius: "50px", 
+            width: { sm: "30%", xs: "95%" },
+            borderTopLeftRadius: "50px",
+            borderTopRightRadius: "50px",
             bgcolor: "#7F7F7F",
             height: "100%",
           }}
@@ -90,8 +127,7 @@ const Welcome: React.FC = () => {
                 Check-in{" "}
               </Typography>
 
-           
-               <DatePicker  />
+              <DatePicker />
             </Box>
 
             <Box
@@ -106,8 +142,7 @@ const Welcome: React.FC = () => {
                 Check-in{" "}
               </Typography>
 
-       
-                <TimePicker  />
+              <TimePicker />
             </Box>
 
             <Box
@@ -122,7 +157,7 @@ const Welcome: React.FC = () => {
                 Check-Out{" "}
               </Typography>
 
-                <TimePicker  />
+              <TimePicker />
             </Box>
             <Box sx={{ textAlign: "center" }}>
               <Button

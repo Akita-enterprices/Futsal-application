@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box, IconButton, Grid, Button } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareIcon from "@mui/icons-material/Share";
@@ -7,14 +7,61 @@ import GradeIcon from "@mui/icons-material/Grade";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import { useParams } from "react-router-dom";
+
+interface CourtData {
+  futsalName: string;
+  name: string;
+  dayRate: number;
+  nightRate: number;
+  // Add other properties as per your data structure
+}
 
 const Courtdetails: React.FC<{}> = () => {
   const [clicked, setClicked] = useState(false);
+  const { courtId } = useParams<{ courtId: string }>();
+  const [data, setData] = useState<CourtData | null>(null)
+
+  // Fetch court details using courtId
+  // Example fetch or useEffect to fetch court details based on courtId
+  useEffect(() => {
+    const fetchCourtDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/admin/${courtId}`); // Replace with your actual API endpoint for court details
+        if (!response.ok) {
+          throw new Error("Failed to fetch court details");
+        }
+        const data = await response.json();
+        console.log('data',data)
+        setData(data)
+      } catch (error) {
+        console.error("Error fetching court details:", error);
+      }
+    };
+
+    fetchCourtDetails();
+  }, [courtId]);
 
   const goBack = () => {
     setClicked(true);
     window.history.back();
   };
+
+
+  if (!data) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4">Loading...</Typography>
+      </Box>
+    );
+  }
   return (
     <Box
       sx={{
@@ -75,7 +122,8 @@ const Courtdetails: React.FC<{}> = () => {
         <Typography
           sx={{ fontWeight: "bold", fontSize: { sm: "20px", xs: "15px" } }}
         >
-          CIB Court
+          {data.futsalName}
+          
         </Typography>
         <Box
           component={"a"}
@@ -118,7 +166,7 @@ const Courtdetails: React.FC<{}> = () => {
               mb: 2,
             }}
           >
-            Description
+              Description
           </Typography>
           <Typography
             sx={{ fontSize: { sm: "14px", xs: "13px" }, opacity: "40%" }}
@@ -279,7 +327,7 @@ const Courtdetails: React.FC<{}> = () => {
               }}
             />
             <Typography sx={{ ml: 2 }}>
-              <b>John Mail</b>
+              <b>{data.name}</b>
               <br /> Receptionist
             </Typography>
 
@@ -313,9 +361,9 @@ const Courtdetails: React.FC<{}> = () => {
         >
           <Typography fontSize={{ sm: "18px", xs: "11px" }}>
             {" "}
-            <span style={{ fontWeight: "bold" }}>3000/=</span>{" "}
+            <span style={{ fontWeight: "bold" }}>{data.dayRate}/=</span>{" "}
             <span style={{ fontWeight: "lighter" }}>Day</span> <br />
-            <span style={{ fontWeight: "bold" }}>3500/=</span>{" "}
+            <span style={{ fontWeight: "bold" }}>{data.nightRate}/=</span>{" "}
             <span style={{ fontWeight: "lighter" }}>Night</span> <br />
           </Typography>
           <Button

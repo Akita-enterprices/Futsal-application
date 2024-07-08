@@ -75,7 +75,9 @@ const Createaccount: React.FC<{}> = () => {
 
               placeholder="User name"
               type="name"
-
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
