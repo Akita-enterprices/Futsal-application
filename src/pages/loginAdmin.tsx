@@ -3,6 +3,7 @@ import { Box, TextField, Typography, Button, InputAdornment } from "@mui/materia
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 // Mock function to validate email and password
 const validateCredentials = (email: string, password: string) => {
@@ -17,29 +18,33 @@ const validateCredentials = (email: string, password: string) => {
   );
 };
 
+
+
 const LoginAdmin: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate()
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+navigate("/welcome")
+    // if (validateCredentials(email, password)) {
+    //   console.log("Submitted email:", email);
+    //   console.log("Submitted password:", password);
+    //   setError(""); // Clear any previous error
 
-    if (validateCredentials(email, password)) {
-      console.log("Submitted email:", email);
-      console.log("Submitted password:", password);
-      setError(""); // Clear any previous error
+    //   // Proceed with successful login actions, like redirecting to a welcome page
+    //   window.location.href = "/welcome";
+    // } else {
+    //   setError("Invalid email or password. Please try again.");
+    // }
 
-      // Proceed with successful login actions, like redirecting to a welcome page
-      window.location.href = "/welcome";
-    } else {
-      setError("Invalid email or password. Please try again.");
-    }
-
-    // Reset the form fields
-    setEmail("");
-    setPassword("");
+    // // Reset the form fields
+    // setEmail("");
+    // setPassword("");
   };
 
   // Handle back button click

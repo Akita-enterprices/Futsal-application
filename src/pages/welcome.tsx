@@ -15,36 +15,36 @@ const Welcome: React.FC<{}> = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const token = localStorage.getItem('token'); 
-        if (token) {
-          await axios.get('/api/auth/me', {
-            headers: {
-              Authorization: `Bearer ${token}` // Set token in Authorization header
-            }
-          });
-          setAuthenticated(true);
-        } else {
-          throw new Error('No token found');
-        }
-      } catch (error) {
-        console.log('Verification failed', error);
-        navigate('/login');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    verifyToken();
-  }, [navigate]);
+  // useEffect(() => {
+  //   const verifyToken = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token'); 
+  //       if (token) {
+  //         await axios.get('/api/auth/me', {
+  //           headers: {
+  //             Authorization: `Bearer ${token}` // Set token in Authorization header
+  //           }
+  //         });
+  //         setAuthenticated(true);
+  //       } else {
+  //         throw new Error('No token found');
+  //       }
+  //     } catch (error) {
+  //       console.log('Verification failed', error);
+  //       navigate('/login');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   verifyToken();
+  // }, [navigate]);
 
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
-   if(!isAuthenticated){
-    return null;
-   }
+  // if (isLoading) {
+  //   return <Typography>Loading...</Typography>;
+  // }
+  //  if(!isAuthenticated){
+  //   return null;
+  //  }
 
   return (
     <Box
