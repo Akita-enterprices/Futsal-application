@@ -1,16 +1,24 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
+import { createRoot } from "react-dom/client";
+import { CustomAuthProvider } from "./auth/AuthContext";
 import App from "./App";
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const redirectUri = window.location.origin;
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const rootElement = document.getElementById("root");
 
+if (rootElement) {
+  const root = createRoot(rootElement);
 
+  root.render(
+    <CustomAuthProvider
+      domain={domain}
+      clientId={clientId}
+      redirectUri={redirectUri}
+    >
+      <App />
+    </CustomAuthProvider>
+  );
+}

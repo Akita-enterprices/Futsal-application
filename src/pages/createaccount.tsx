@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Box, Typography, TextField, Button, InputAdornment } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  InputAdornment,
+} from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 const Createaccount: React.FC<{}> = () => {
   const [username, setUsername] = useState("");
@@ -15,21 +21,24 @@ const Createaccount: React.FC<{}> = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
+  const { signup, authToken, error: authError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/signup', {
-        username,
-        email,
-        password,
-        phone,
-      });
-      console.log('Response:', response.data);
-      navigate('/verifyaccount', { state: { phone } });
+      // const response = await axios.post('http://localhost:4000/api/auth/signup', {
+      //   username,
+      //   email,
+      //   password,
+      //   phone,
+      // });
+      // console.log('Response:', response.data);
+      await signup(email, password, phone, username);
+
+      navigate("/verifyaccount", { state: { phone } });
       // Handle success (e.g., navigate to another page or show a success message)
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       // Handle error (e.g., show an error message)
     }
     // Reset form fields
@@ -72,7 +81,6 @@ const Createaccount: React.FC<{}> = () => {
         <form onSubmit={handleSubmit}>
           <Box>
             <TextField
-
               placeholder="User name"
               type="name"
               value={username}
@@ -112,7 +120,6 @@ const Createaccount: React.FC<{}> = () => {
           <br />
           <Box>
             {" "}
-            
             <TextField
               placeholder="Phone number"
               type="tel"
@@ -123,7 +130,7 @@ const Createaccount: React.FC<{}> = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                  <PhoneOutlinedIcon color="action"  />
+                    <PhoneOutlinedIcon color="action" />
                   </InputAdornment>
                 ),
               }}
@@ -182,4 +189,3 @@ const Createaccount: React.FC<{}> = () => {
 };
 
 export default Createaccount;
-
