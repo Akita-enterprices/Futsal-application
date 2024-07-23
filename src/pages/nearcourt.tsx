@@ -24,7 +24,9 @@ const Nearcourt: React.FC<{}> = () => {
   useEffect(() => {
     const fetchCourts = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/admin"); // Replace with your actual API endpoint
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}api/admin`
+        ); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error("Failed to fetch admins");
         }
