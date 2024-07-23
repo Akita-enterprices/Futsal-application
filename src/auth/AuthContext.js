@@ -15,26 +15,26 @@ export const AuthProvider = ({ children }) => {
     !!localStorage.getItem("authToken")
   );
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      axios
-        .get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data);
-          setIsLoggedIn(true);
-          console.log("User info fetched successfully");
-        })
-        .catch((error) => {
-          console.error("Error fetching user info", error);
-          setIsLoggedIn(false);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("authToken");
+  //   if (token) {
+  //     axios
+  //       .get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         setUser(response.data);
+  //         setIsLoggedIn(true);
+  //         console.log("User info fetched successfully");
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching user info", error);
+  //         setIsLoggedIn(false);
+  //       });
+  //   }
+  // }, []);
 
   const login = async (email, password) => {
     try {
@@ -52,16 +52,16 @@ export const AuthProvider = ({ children }) => {
 
       setAuthToken(response.data.access_token);
       localStorage.setItem("authToken", response.data.access_token); // Store token in local storage
-      const userInfo = await axios.get(
-        `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
-        {
-          headers: {
-            Authorization: `Bearer ${response.data.access_token}`,
-          },
-        }
-      );
+      // const userInfo = await axios.get(
+      //   `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${response.data.access_token}`,
+      //     },
+      //   }
+      // );
 
-      setUser(userInfo.data);
+      // setUser(userInfo.data);
       setIsLoggedIn(true); // Set isLoggedIn to true after successful login
     } catch (error) {
       setError(error.response ? error.response.data : "An error occurred");

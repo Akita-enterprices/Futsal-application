@@ -19,18 +19,12 @@ const Login: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login, authToken, error: authError } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await login(email, password);
-    // if (authToken) {
-    //   console.log("Auth0 token:", authToken);
-    localStorage.setItem("authToken", authToken);
     navigate("/welcome");
-    // } else {
-    //   setError(authError);
-    // }
     setEmail("");
     setPassword("");
   };

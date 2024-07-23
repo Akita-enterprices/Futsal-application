@@ -10,18 +10,30 @@ interface CourtcardProps {
   title: string;
   description: string;
   price: string;
+  image: string;
 }
 
-const Courtcard: React.FC<CourtcardProps> = ({ rating, link, title, description , price}) => (
+const Courtcard: React.FC<CourtcardProps> = ({
+  rating,
+  link,
+  title,
+  description,
+  price,
+  image,
+}) => (
   <Box>
-    <Card sx={{ bgcolor: " #D9D9D9", width: "180px", height: "300px", mr: 3, p: 2 }}>
-   
+    <Card
+      sx={{ bgcolor: " #D9D9D9", width: "180px", height: "400px", mr: 3, p: 2 }}
+    >
       <Box
+        component="img"
+        src={image}
+        alt={title}
         sx={{
           m: 1,
           width: "90%",
           height: "40%",
-          bgcolor: "#007EF2",
+          objectFit: "cover",
           borderRadius: 3,
         }}
       />
@@ -33,7 +45,7 @@ const Courtcard: React.FC<CourtcardProps> = ({ rating, link, title, description 
           borderRadius: 2,
           width: "30%",
           height: "6%",
-          ml: 'auto',
+          ml: "auto",
           display: "flex",
           flexDirection: "row",
           textDecoration: "none",
@@ -55,18 +67,27 @@ const Courtcard: React.FC<CourtcardProps> = ({ rating, link, title, description 
           {rating}
         </Typography>
       </Box>
-      <Typography variant="h6" component="div" sx={{ mb: 1, fontWeight: 'bold',textAlign:"left" ,ml:1}}>
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{ mb: 1, fontWeight: "bold", textAlign: "left", ml: 1 }}
+      >
         {title}
       </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1}}>
-        <LocationOnIcon sx={{ fontSize: 18, color: '#0a0a0a' }} />
-        <Typography variant="body2" color="#0a0a0a" sx={{  fontWeight: "bold" }}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+        <LocationOnIcon sx={{ fontSize: 18, color: "#0a0a0a" }} />
+        <Typography variant="body2" color="#0a0a0a" sx={{ fontWeight: "bold" }}>
           {description}
         </Typography>
-      </Box><br/>
-      <Typography variant="body2" color="#0a0a0a" sx={{ mb: 2,ml:1,textAlign:"left",fontWeight:"bold" }}>
-       { price }
-     </Typography>
+      </Box>
+      <br />
+      <Typography
+        variant="body2"
+        color="#0a0a0a"
+        sx={{ mb: 2, ml: 1, textAlign: "left", fontWeight: "bold" }}
+      >
+        {price}
+      </Typography>
     </Card>
   </Box>
 );
