@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Keypad from "../component/keypad"; 
+import Keypad from "../component/keypad";
 
 const Verifyaccount: React.FC<{}> = () => {
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
@@ -32,17 +32,17 @@ const Verifyaccount: React.FC<{}> = () => {
     setCode(newCode);
   };
 
-  const handleCodeChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newCode = [...code];
-    newCode[index] = event.target.value;
-    setCode(newCode);
-  };
-
+  const handleCodeChange =
+    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newCode = [...code];
+      newCode[index] = event.target.value;
+      setCode(newCode);
+    };
 
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"120vh"},
+        height: { sm: "100vh", xs: "120vh" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -63,7 +63,10 @@ const Verifyaccount: React.FC<{}> = () => {
           alignItems: "left",
         }}
       >
-        <ArrowBackIcon onClick={goBack} sx={{ color:"#007EF2", cursor: "pointer" }} />
+        <ArrowBackIcon
+          onClick={goBack}
+          sx={{ color: "#007EF2", cursor: "pointer" }}
+        />
       </Box>
       <Typography
         sx={{ fontSize: { sm: "30px", xs: "20px" }, fontWeight: "bold" }}
@@ -84,47 +87,52 @@ const Verifyaccount: React.FC<{}> = () => {
             value={digit}
             onChange={handleCodeChange(index)}
             inputProps={{ maxLength: 1 }}
-            sx={{ mr: 2, width: { sm: "50px", xs: "50px" }, maxWidth: "100%", textAlign: "center" }}
+            sx={{
+              mr: 2,
+              width: { sm: "50px", xs: "50px" },
+              maxWidth: "100%",
+              textAlign: "center",
+            }}
           />
         ))}
       </Box>
-      <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>Didn't receive code?<a href="" >Resend again</a> </Typography>
-      <br/>
-     
-     <Button
-       type="submit"
-       variant="contained"
-       href="/welcome"
-       sx={{
-         bgcolor: "#0F3D3E",
-         "&:hover": {
-           bgcolor: "#0F3D3E",
-         },
-         width: {
-           sm: "25%",
-           xs: "50%",
-         },
-         borderRadius: 2,
-         mb: 2,
-       }}
-     >
-       Verify
-     </Button><br/>
-      <Keypad onDigitClick={handleDigitClick} onCloseClick={handleCloseClick} />
-    
+      <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
+        Didn't receive code?
+        <a href="example">Resend again</a>
+      </Typography>
+      <br />
 
+      <Button
+        type="submit"
+        variant="contained"
+        href="/welcome"
+        sx={{
+          bgcolor: "#0F3D3E",
+          "&:hover": {
+            bgcolor: "#0F3D3E",
+          },
+          width: {
+            sm: "25%",
+            xs: "50%",
+          },
+          borderRadius: 2,
+          mb: 2,
+        }}
+      >
+        Verify
+      </Button>
+      <br />
+      <Keypad onDigitClick={handleDigitClick} onCloseClick={handleCloseClick} />
     </Box>
   );
 };
 
-
 export default Verifyaccount;
-
 
 // import React, { useState } from "react";
 // import { Box, Button, TextField, Typography } from "@mui/material";
 // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-// import Keypad from "../component/Keypad"; 
+// import Keypad from "../component/Keypad";
 
 // const Verifyaccount: React.FC<{}> = () => {
 //   const [code, setCode] = useState<string[]>(["", "", "", ""]);
@@ -251,5 +259,3 @@ export default Verifyaccount;
 // };
 
 // export default Verifyaccount;
-
-

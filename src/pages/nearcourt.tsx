@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Courtcard from "../component/courtcard";
 import { Link } from "react-router-dom";
@@ -12,14 +12,14 @@ interface Court {
   name: string;
   address: string;
   dayRate: number;
-  futsalName:string
-  
+  futsalName: string;
+  fileName: { url: string; filename: string };
   // Add other fields as needed
 }
 
 const Nearcourt: React.FC<{}> = () => {
-  const [clicked, setClicked] = useState(false);
   const [court, setCourt] = useState<Court[]>([]);
+  console.log(court);
 
   useEffect(() => {
     const fetchCourts = async () => {
@@ -37,36 +37,36 @@ const Nearcourt: React.FC<{}> = () => {
 
     fetchCourts();
   }, []);
-  console.log("court",court)
+  console.log("court", court);
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
+    "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    width: '100%',
+    width: "100%",
   }));
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    width: '100%',
-    '& .MuiInputBase-input': {
+    color: "inherit",
+    width: "100%",
+    "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
+      transition: theme.transitions.create("width"),
+      width: "100%",
     },
   }));
 
@@ -96,8 +96,8 @@ const Nearcourt: React.FC<{}> = () => {
           sx={{
             width: { sm: "60%", xs: "85%" },
             marginTop: 1,
-            marginLeft: { sm: 8, xs: 'auto' },
-            marginRight: { sm: 0, xs: 'auto' },
+            marginLeft: { sm: 8, xs: "auto" },
+            marginRight: { sm: 0, xs: "auto" },
             textAlign: "left",
           }}
         >
@@ -126,7 +126,7 @@ const Nearcourt: React.FC<{}> = () => {
             textAlign: "center",
             mt: 2,
             width: { sm: "75%", xs: "80%" },
-            margin: '0 auto',
+            margin: "0 auto",
             bgcolor: "#D9D9D9",
             borderRadius: 3,
           }}
@@ -137,7 +137,7 @@ const Nearcourt: React.FC<{}> = () => {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search court name"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
           </Search>
         </Box>
@@ -160,23 +160,25 @@ const Nearcourt: React.FC<{}> = () => {
             justifyContent: "center",
             flexDirection: { sm: "row", xs: "row" },
             mt: 2,
-            width:{sm:"auto",xs:"500px"}
-         
+            width: { sm: "auto", xs: "500px" },
           }}
         >
-      
-      {court.map((court) => (
-          <Link to={`/courtdetails/${court._id}`} key={court._id} style={{ textDecoration: "none" }}>
-            <Courtcard
-              rating={court.rating}
-              link={`/courtdetails/${court._id}`}
-              title={court.futsalName}
-              description={court.address}
-              price={`$ ${court.dayRate}`}
-            />
-          </Link>
-        ))}
-          
+          {court.map((court) => (
+            <Link
+              to={`/courtdetails/${court._id}`}
+              key={court._id}
+              style={{ textDecoration: "none" }}
+            >
+              <Courtcard
+                rating={court.rating}
+                link={`/courtdetails/${court._id}`}
+                title={court.futsalName}
+                description={court.address}
+                price={`$ ${court.dayRate}`}
+                image={court.fileName?.url}
+              />
+            </Link>
+          ))}
         </Box>
       </Box>
     </Box>

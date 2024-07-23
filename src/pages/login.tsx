@@ -1,57 +1,28 @@
 import React, { useState } from "react";
-import { Box, TextField, Typography, Button, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  InputAdornment,
+} from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "../utils/axios"; 
-import { useNavigate } from 'react-router-dom';
-
-// Mock function to validate email and password
-const validateCredentials = (email: string, password: string) => {
-  // This is a mock validation. Replace with actual API call in production.
-  const registeredUsers = [
-    { email: "user1@example.com", password: "password123" },
-    { email: "user2@example.com", password: "password456" },
-  ];
-
-  return registeredUsers.some(
-    (user) => user.email === email && user.password === password
-  );
-};
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-
+  // const [error, setError] = useState("");
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      // const response = await axios.post("http://localhost:4000/api/auth/login", { email, password }); 
-      // localStorage.setItem('token', response.data.token)
-      // console.log("Login successful:", response.data);
-      navigate('/welcome');
-
-    } catch (error) {
-      console.error("Login failed");
-    }
-
-
-    if (validateCredentials(email, password)) {
-      console.log("Submitted email:", email);
-      console.log("Submitted password:", password);
-      setError(""); // Clear any previous error
-
-      // Proceed with successful login actions, like redirecting to a welcome page
-      window.location.href = "/welcome";
-    } else {
-      setError("Invalid email or password. Please try again.");
-    }
-
-    // Reset the form fields
+    await login(email, password);
+    navigate("/welcome");
     setEmail("");
     setPassword("");
   };
@@ -64,7 +35,7 @@ const Login: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"90vh"},
+        height: { sm: "100vh", xs: "90vh" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -111,9 +82,7 @@ const Login: React.FC<{}> = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-
               required
-
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -125,17 +94,12 @@ const Login: React.FC<{}> = () => {
             />
           </Box>
           <Box>
-
-           
-
             <TextField
               placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-
               required
-
               sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
               InputProps={{
                 startAdornment: (
@@ -146,31 +110,27 @@ const Login: React.FC<{}> = () => {
               }}
             />
           </Box>
-          {error && (
+          {/* {error && (
             <Typography sx={{ color: "red", mb: 2 }}>{error}</Typography>
-          )}
+          )} */}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
-          </Typography><br/>
+          </Typography>
+          <br />
           <Button
-          href="/welcome"
             type="submit"
             variant="contained"
             sx={{
               bgcolor: "#0F3D3E",
-
               "&:hover": {
-                bgcolor: "#0F3D3E", 
+                bgcolor: "#0F3D3E",
               },
-
               width: {
                 sm: "50%",
                 xs: "50%",
               },
               borderRadius: 2,
               mb: 2,
-
-
             }}
           >
             Login
@@ -182,27 +142,27 @@ const Login: React.FC<{}> = () => {
       </Box>
       <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
         Does have an account? <a href="/createaccount">signUp</a>
-      </Typography><br/>
+      </Typography>
+      <br />
       <Button
-            type="submit"
-            href="/createAdminaccount"
-            variant="contained"
-            sx={{
-              bgcolor: "gray",
-              "&:hover": {
-                bgcolor: "gray"
-              },
-              width: {
-                sm: "10%",
-                xs: "50%",
-              },
-              borderRadius: 2,
-              mb: 2,
-            }}
-          >
-           ADMIN
-          </Button>
-
+        type="submit"
+        href="/createAdminaccount"
+        variant="contained"
+        sx={{
+          bgcolor: "gray",
+          "&:hover": {
+            bgcolor: "gray",
+          },
+          width: {
+            sm: "10%",
+            xs: "50%",
+          },
+          borderRadius: 2,
+          mb: 2,
+        }}
+      >
+        ADMIN
+      </Button>
     </Box>
   );
 };

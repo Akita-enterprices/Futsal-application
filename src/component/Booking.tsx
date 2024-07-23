@@ -7,11 +7,11 @@ export default function OutlinedCard() {
   const [time, setTime] = React.useState<string>("");
   const [payment, setPayment] = React.useState<string>("");
 
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setter(event.target.value);
-  };
+  const handleInputChange =
+    (setter: React.Dispatch<React.SetStateAction<string>>) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setter(event.target.value);
+    };
 
   const card = (
     <React.Fragment>
@@ -32,9 +32,12 @@ export default function OutlinedCard() {
             fontSize: "10px",
           }}
         >
-          Name: {name}<br />
-          Date: {date}<br />
-          Time: {time}<br />
+          Name: {name}
+          <br />
+          Date: {date}
+          <br />
+          Time: {time}
+          <br />
           Payment: {payment}/=
         </Typography>
       </Box>
@@ -68,7 +71,15 @@ export default function OutlinedCard() {
           onChange={handleInputChange(setPayment)}
         />
       </Box> */}
-      <Card sx={{ width: {sm:"500px",xs:"240px"}, height: "100px", display: "flex", flexDirection: "row", bgcolor: "#f5f3f4" }}>
+      <Card
+        sx={{
+          width: { sm: "500px", xs: "240px" },
+          height: "100px",
+          display: "flex",
+          flexDirection: "row",
+          bgcolor: "#f5f3f4",
+        }}
+      >
         {card}
       </Card>
     </Box>

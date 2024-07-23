@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import axios from "../utils/axios";
-import { useNavigate } from "react-router-dom";
+// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+// import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+// import axios from "../utils/axios";
+// import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 
-import dayjs, { Dayjs } from "dayjs";
-
 const Welcome: React.FC<{}> = () => {
-  const navigate = useNavigate();
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  // const navigate = useNavigate();
+  // const [isAuthenticated, setAuthenticated] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   // useEffect(() => {
   //   const verifyToken = async () => {

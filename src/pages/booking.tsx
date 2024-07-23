@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { Box, Typography } from "@mui/material";
-import Card from "../component/Booking";
+// import Card from "../component/Booking";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Booking: React.FC<{}> = () => {
@@ -25,7 +25,7 @@ const Booking: React.FC<{}> = () => {
     >
       <Box
         sx={{
-          width: { xs: "100%", sm: "45%", },
+          width: { xs: "100%", sm: "45%" },
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-start",
@@ -33,7 +33,10 @@ const Booking: React.FC<{}> = () => {
           mb: 2,
         }}
       >
-        <ArrowBackIcon onClick={goBack} sx={{ color: "#007EF2", cursor: "pointer" }} />
+        <ArrowBackIcon
+          onClick={goBack}
+          sx={{ color: "#007EF2", cursor: "pointer" }}
+        />
       </Box>
       <Typography>Booking</Typography>
       <Box
@@ -45,10 +48,10 @@ const Booking: React.FC<{}> = () => {
           alignItems: "center",
         }}
       >
+        {/* <Card/><br/>
         <Card/><br/>
         <Card/><br/>
-        <Card/><br/>
-        <Card/>
+        <Card/> */}
       </Box>
     </Box>
   );

@@ -21,7 +21,8 @@ import HomePage from "./pages/homepage";
 import Booking from "./pages/booking";
 import Availability from "./pages/availability";
 import Review from "./pages/review";
-import Profile from"./pages/profile";
+import Profile from "./pages/profile";
+import AuthGuard from "./auth/AuthGurd";
 
 const App: React.FC = () => {
   return (
@@ -34,23 +35,100 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/verifyaccount" element={<Verifyaccount />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/nearcourt" element={<Nearcourt />} />
-          <Route path="/courtdetails" element={<Courtdetails />} />
-          <Route path="/bookingsummary" element={<Bookingsummary />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/congrats" element={<Congrats />} />
+          <Route
+            path="/welcome"
+            element={
+              <AuthGuard>
+                <Welcome />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/nearcourt"
+            element={
+              <AuthGuard>
+                <Nearcourt />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/courtdetails"
+            element={
+              <AuthGuard>
+                <Courtdetails />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/bookingsummary"
+            element={
+              <AuthGuard>
+                <Bookingsummary />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <AuthGuard>
+                <Payment />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/congrats"
+            element={
+              <AuthGuard>
+                <Congrats />
+              </AuthGuard>
+            }
+          />
           <Route path="/createAdminaccount" element={<CreateAdminAccount />} />
           <Route path="/loginAdmin" element={<LoginAdmin />} />
-          <Route path="/verifyAdminaccount" element={<VerifyAdminaccount />} /> 
-          <Route path="/register" element={<Register />} /> 
-          <Route path="/homepage" element={<HomePage />} /> 
-          <Route path="/booking" element={<Booking />} /> 
-          <Route path="/availability" element={<Availability />} /> 
-          <Route path="/review" element={<Review />} /> 
-          <Route path="/profile" element={<Profile/>}/>
-          <Route path="/courtdetails/:courtId" element={<Courtdetails/>} />
-
+          <Route path="/verifyAdminaccount" element={<VerifyAdminaccount />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/homepage" element={<HomePage />} />
+          <Route
+            path="/booking"
+            element={
+              <AuthGuard>
+                <Booking />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/availability"
+            element={
+              <AuthGuard>
+                <Availability />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/review"
+            element={
+              <AuthGuard>
+                <Review />
+              </AuthGuard>
+            }
+          />
+          {/* <Route path="/profile" element={<Profile/>}/> */}
+          <Route
+            path="/profile"
+            element={
+              <AuthGuard>
+                <Profile />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/courtdetails/:courtId"
+            element={
+              <AuthGuard>
+                <Courtdetails />
+              </AuthGuard>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

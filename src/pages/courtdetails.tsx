@@ -18,22 +18,23 @@ interface CourtData {
 }
 
 const Courtdetails: React.FC<{}> = () => {
-  const [clicked, setClicked] = useState(false);
   const { courtId } = useParams<{ courtId: string }>();
-  const [data, setData] = useState<CourtData | null>(null)
+  const [data, setData] = useState<CourtData | null>(null);
 
   // Fetch court details using courtId
   // Example fetch or useEffect to fetch court details based on courtId
   useEffect(() => {
     const fetchCourtDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/admin/${courtId}`); // Replace with your actual API endpoint for court details
+        const response = await fetch(
+          `http://localhost:4000/api/admin/${courtId}`
+        ); // Replace with your actual API endpoint for court details
         if (!response.ok) {
           throw new Error("Failed to fetch court details");
         }
         const data = await response.json();
-        console.log('data',data)
-        setData(data)
+        console.log("data", data);
+        setData(data);
       } catch (error) {
         console.error("Error fetching court details:", error);
       }
@@ -43,10 +44,8 @@ const Courtdetails: React.FC<{}> = () => {
   }, [courtId]);
 
   const goBack = () => {
-    setClicked(true);
     window.history.back();
   };
-
 
   if (!data) {
     return (
@@ -123,7 +122,6 @@ const Courtdetails: React.FC<{}> = () => {
           sx={{ fontWeight: "bold", fontSize: { sm: "20px", xs: "15px" } }}
         >
           {data.futsalName}
-          
         </Typography>
         <Box
           component={"a"}
@@ -166,7 +164,7 @@ const Courtdetails: React.FC<{}> = () => {
               mb: 2,
             }}
           >
-              Description
+            Description
           </Typography>
           <Typography
             sx={{ fontSize: { sm: "14px", xs: "13px" }, opacity: "40%" }}
@@ -357,7 +355,6 @@ const Courtdetails: React.FC<{}> = () => {
           display={"flex"}
           flexDirection={"row"}
           width={{ sm: "100%", xs: "100%" }}
-        
         >
           <Typography fontSize={{ sm: "18px", xs: "11px" }}>
             {" "}
@@ -389,7 +386,8 @@ const Courtdetails: React.FC<{}> = () => {
           >
             Book Now
           </Button>
-        </Box><br/>
+        </Box>
+        <br />
       </Box>
     </Box>
   );
