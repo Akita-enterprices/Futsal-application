@@ -27,7 +27,7 @@ const Courtdetails: React.FC<{}> = () => {
     const fetchCourtDetails = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}api/admin/${courtId}`
+          `${process.env.REACT_APP_API_URL}/api/admin/${courtId}`
         ); // Replace with your actual API endpoint for court details
         if (!response.ok) {
           throw new Error("Failed to fetch court details");
