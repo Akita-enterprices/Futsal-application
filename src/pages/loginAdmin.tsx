@@ -1,36 +1,40 @@
 import React, { useState } from "react";
-import { Box, TextField, Typography, Button, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  InputAdornment,
+} from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-// Mock function to validate email and password
-const validateCredentials = (email: string, password: string) => {
-  // This is a mock validation. Replace with actual API call in production.
-  const registeredUsers = [
-    { email: "user1@example.com", password: "password123" },
-    { email: "user2@example.com", password: "password456" },
-  ];
+// // Mock function to validate email and password
+// const validateCredentials = (email: string, password: string) => {
+//   // This is a mock validation. Replace with actual API call in production.
+//   const registeredUsers = [
+//     { email: "user1@example.com", password: "password123" },
+//     { email: "user2@example.com", password: "password456" },
+//   ];
 
-  return registeredUsers.some(
-    (user) => user.email === email && user.password === password
-  );
-};
-
-
+//   return registeredUsers.some(
+//     (user) => user.email === email && user.password === password
+//   );
+// };
 
 const LoginAdmin: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate()
+  // const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-navigate("/welcome")
+
+    navigate("/welcome");
     // if (validateCredentials(email, password)) {
     //   console.log("Submitted email:", email);
     //   console.log("Submitted password:", password);
@@ -55,7 +59,7 @@ navigate("/welcome")
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"90vh"},
+        height: { sm: "100vh", xs: "90vh" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -130,14 +134,14 @@ navigate("/welcome")
               }}
             />
           </Box>
-          {error && (
+          {/* {error && (
             <Typography sx={{ color: "red", mb: 2 }}>{error}</Typography>
-          )}
+          )} */}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
           </Typography>
           <Button
-          href="/"
+            href="/"
             type="submit"
             variant="contained"
             sx={{

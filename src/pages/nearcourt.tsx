@@ -18,7 +18,6 @@ interface Court {
 }
 
 const Nearcourt: React.FC<{}> = () => {
-  const [clicked, setClicked] = useState(false);
   const [court, setCourt] = useState<Court[]>([]);
   console.log(court);
 

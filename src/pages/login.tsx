@@ -1,5 +1,3 @@
-// src/components/Login.js
-
 import React, { useState } from "react";
 import {
   Box,
@@ -18,7 +16,7 @@ const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,9 +110,9 @@ const Login: React.FC<{}> = () => {
               }}
             />
           </Box>
-          {error && (
+          {/* {error && (
             <Typography sx={{ color: "red", mb: 2 }}>{error}</Typography>
-          )}
+          )} */}
           <Typography sx={{ opacity: "35%", textAlign: "left" }}>
             <a href="/forgotpassword">Forgot password</a>
           </Typography>

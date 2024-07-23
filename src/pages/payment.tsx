@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Payment: React.FC<{}> = () => {
-  const [clicked, setClicked] = useState(false);
-
   const goBack = () => {
-    setClicked(true);
     window.history.back();
   };
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"130vh"},
+        height: { sm: "100vh", xs: "130vh" },
         width: { sm: "100%", xs: "100%" },
         justifyContent: "center",
         alignItems: "center",

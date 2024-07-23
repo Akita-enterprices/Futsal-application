@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, IconButton, Typography, Button } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Bookingsummary: React.FC<{}> = () => {
-  const [clicked, setClicked] = useState(false);
-
   const goBack = () => {
-    setClicked(true);
     window.history.back();
   };
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"100vh"},
+        height: { sm: "100vh", xs: "100vh" },
         width: { sm: "100%", xs: "100%" },
         justifyContent: "center",
         alignItems: "center",
@@ -166,7 +163,6 @@ const Bookingsummary: React.FC<{}> = () => {
           display: "flex",
           justifyContent: "center", // Center horizontally
           alignItems: "center", // Center vertically
-     
         }}
       >
         <Box
@@ -211,7 +207,6 @@ const Bookingsummary: React.FC<{}> = () => {
           justifyContent: "center",
           alignItems: "center",
           mt: "200px",
-      
         }}
       >
         <Button
@@ -235,7 +230,8 @@ const Bookingsummary: React.FC<{}> = () => {
         >
           Continue to payment
         </Button>
-      </Box><br/>
+      </Box>
+      <br />
     </Box>
   );
 };
