@@ -68,7 +68,7 @@ const Register: React.FC<{}> = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/admin/register",
+        `${process.env.REACT_APP_API_URL}api/admin/register`,
         formData,
         {
           headers: {
