@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log(email, password);
       const response = await axios.post(
         `https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`,
         {

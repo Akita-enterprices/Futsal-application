@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Image2 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg"; // Background image
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
@@ -27,11 +26,6 @@ const Login: React.FC<{}> = () => {
     navigate("/welcome");
     setEmail("");
     setPassword("");
-  };
-
-  // Handle back button click
-  const goBack = () => {
-    window.history.back();
   };
 
   return (
@@ -60,8 +54,6 @@ const Login: React.FC<{}> = () => {
         }}
       >
         <CardContent>
-        
-
           <Typography
             sx={{
               fontSize: { sm: "30px", xs: "20px" },
@@ -86,9 +78,9 @@ const Login: React.FC<{}> = () => {
 
           <form onSubmit={handleSubmit}>
             <Box>
-            <Typography sx={{ textAlign: "center", mb: 2 }}>
-            _____________ or ____________
-          </Typography>
+              <Typography sx={{ textAlign: "center", mb: 2 }}>
+                _____________ or ____________
+              </Typography>
               <TextField
                 placeholder="Email address"
                 type="email"
@@ -132,7 +124,6 @@ const Login: React.FC<{}> = () => {
             <Button
               type="submit"
               variant="contained"
-              href="/nearcourt"
               sx={{
                 bgcolor: "#0F3D3E",
                 "&:hover": { bgcolor: "#0F3D3E" },
@@ -140,7 +131,7 @@ const Login: React.FC<{}> = () => {
                 mx: "auto", // Centered horizontally
                 display: "block",
                 borderRadius: 2,
-                textAlign:"center",
+                textAlign: "center",
                 mb: 2,
               }}
             >
