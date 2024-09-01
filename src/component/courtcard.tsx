@@ -24,9 +24,9 @@ const Courtcard: React.FC<CourtcardProps> = ({
   <Box>
     <Card
       sx={{
-        bgcolor: "#D9D9D9",
-        width: "380px",
-        height: "200px",
+        bgcolor: " #D9D9D9",
+        width: { sm: "180px", xs: "90%" },
+        height: "400px",
         mr: 3,
         p: 2,
         display: "flex",
@@ -46,7 +46,6 @@ const Courtcard: React.FC<CourtcardProps> = ({
         }}
       />
 
-   
       <Box
         component="a"
         href={link}
@@ -59,7 +58,6 @@ const Courtcard: React.FC<CourtcardProps> = ({
           textDecoration: "none",
         }}
       >
-    
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
           <GradeIcon sx={{ color: "orange", fontSize: "20px", mr: 1 }} />
           <Typography
@@ -78,13 +76,12 @@ const Courtcard: React.FC<CourtcardProps> = ({
             fontWeight: "bold",
             textAlign: "left",
             mb: 1,
-            fontSize: { sm: "15px", xs: "10px" ,color:"black"},
+            fontSize: { sm: "15px", xs: "10px", color: "black" },
           }}
         >
           {title}
         </Typography>
 
-     
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
           <LocationOnIcon sx={{ fontSize: 18, color: "#0a0a0a" }} />
           <Typography
@@ -96,7 +93,6 @@ const Courtcard: React.FC<CourtcardProps> = ({
           </Typography>
         </Box>
 
-      
         <Typography
           variant="body2"
           color="#0a0a0a"

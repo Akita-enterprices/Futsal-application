@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
-import Image1 from '../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg';
+import Image1 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg";
 
 const Futureoffutsal: React.FC<{}> = () => {
   return (
@@ -10,8 +10,8 @@ const Futureoffutsal: React.FC<{}> = () => {
           height: "130vh", // Use full viewport height
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center", // Center vertically
-          alignItems: "center", // Center horizontally
+          justifyContent: "center",
+          alignItems: "center",
           bgcolor: "#f9f8fd",
           color: "black",
           fontSize: "1.5rem",
@@ -21,7 +21,6 @@ const Futureoffutsal: React.FC<{}> = () => {
       >
         <Box
           sx={{
-     
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

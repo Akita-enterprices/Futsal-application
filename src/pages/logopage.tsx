@@ -2,17 +2,24 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Logo from "../Asset/futsal-logo-colour.png";
+import { useAuth } from "../auth/AuthContext";
 
 const LogoPage: React.FC<{}> = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      console.log("logo page", isLoggedIn);
+      if (isLoggedIn) {
+        return navigate("/welcome");
+        // return console.log("not authenticated");
+      }
       navigate("/Futureoffutsal");
     }, 6000);
 
     return () => clearTimeout(timeoutId);
-  }, [navigate]);
+  }, [navigate, isLoggedIn]);
 
   return (
     <Box

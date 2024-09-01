@@ -36,6 +36,7 @@ const Nearcourt: React.FC<{}> = () => {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/api/admin`
         );
+
         if (!response.ok) {
           throw new Error("Failed to fetch courts");
         }
@@ -106,7 +107,6 @@ const Nearcourt: React.FC<{}> = () => {
           fontWeight: "bold",
           maxWidth: "100%",
           padding: 2,
-    
         }}
       >
         <Box
@@ -115,9 +115,14 @@ const Nearcourt: React.FC<{}> = () => {
             textAlign: "center",
           }}
         >
-          <Box sx={{textAlign:"left",width:{sm:"60%",xs:"60%"}}}>
-            <Typography sx={{color:"grey",fontSize:"12px",mb:2}}>Your current location</Typography>
-            <Typography sx={{fontWeight:"bold"}}><LocationOnIcon sx={{fontSize:"15px",color:"purple"}} /> Watadeniya,Gampola</Typography>
+          <Box sx={{ textAlign: "left", width: { sm: "60%", xs: "60%" } }}>
+            <Typography sx={{ color: "grey", fontSize: "12px", mb: 2 }}>
+              Your current location
+            </Typography>
+            <Typography sx={{ fontWeight: "bold" }}>
+              <LocationOnIcon sx={{ fontSize: "15px", color: "purple" }} />{" "}
+              Watadeniya,Gampola
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -127,7 +132,6 @@ const Nearcourt: React.FC<{}> = () => {
               marginLeft: { sm: 2, xs: "0%" },
               marginRight: { sm: 0, xs: "auto" },
               textAlign: "center",
-           
             }}
           >
             <Button
@@ -140,148 +144,181 @@ const Nearcourt: React.FC<{}> = () => {
                   bgcolor: "#0F3D3E",
                 },
                 width: { sm: "100%", xs: "100%" },
-                borderRadius:"80px",
-              
+                borderRadius: "80px",
               }}
             >
               Find the available time
             </Button>
             <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  width: { sm: 500, xs: 300 },
+                  p: 3,
+
+                  textAlign: "left",
+                  height: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    mb: 3,
                   }}
-               
-        >
-      <Box
-    sx={{
-      width: { sm: 500, xs: 300 },
-      p: 3,
-  
-      textAlign: "left",
-      height:"100%"
-    }}
-  >
-  <Box sx={{ alignItems: "center", display: "flex", justifyContent: "center",mb:3 }}>
-  <Box
-    sx={{
-      bgcolor: "grey",
-      height: {sm:"20%",xs:"30%"},
-      width: {sm:"50%",xs:"70%"},
-      borderRadius: 10,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center", // Center the text vertically
-      textAlign: "center", // Ensure the text is centered
-      padding: 1, // Optional: add padding for a better look
-    }}
-  >
-    <Typography>Find the available time</Typography>
-  </Box>
-</Box>
+                >
+                  <Box
+                    sx={{
+                      bgcolor: "grey",
+                      height: { sm: "20%", xs: "30%" },
+                      width: { sm: "50%", xs: "70%" },
+                      borderRadius: 10,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center", // Center the text vertically
+                      textAlign: "center", // Ensure the text is centered
+                      padding: 1, // Optional: add padding for a better look
+                    }}
+                  >
+                    <Typography>Find the available time</Typography>
+                  </Box>
+                </Box>
 
-    <Box
-      sx={{
-        p: 4,
-        display: "flex",
-        flexDirection: "column",
-        height: "50%", // Inner box height less than popup
-        overflowY: "auto", // Adds scroll if content overflows
-        bgcolor: "rgba(255, 255, 255, 0.4)",
-        borderRadius: 10,
-        boxShadow: 3,
-      }}
-    >
-      <TextField
-        type="text"
-        placeholder="Gampola"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        sx={{ bgcolor: "#d9dadb",   borderRadius:"80px", width: {sm:"100%",xs:"100%"} ,
-        height:"auto",
-        '& .MuiOutlinedInput-root': {
-          '& fieldset': {
-            borderColor: 'transparent', // Removes the default outline
-          },
-        }
-        
-        }}
-        InputProps={{
-          startAdornment: <SearchIcon/>,
-        }}
-      />
-      <br />
-      <br />
- <Box sx={{ display: "flex", gap: 2, flexDirection: "column", width: "100%"}}>
-  <Box  display={"flex"}
-              flexDirection={"row"}
-              width="100%"
-               sx={{  
-                gap:3,
-              marginBottom: 2}}>
-    <Typography sx={{ fontWeight: "bold" }}>Check-in</Typography>
-    <DatePicker
-      value={checkInDate}
-      onChange={(newValue) => setCheckInDate(newValue)}
-    />
-  </Box>
-  <Box display={"flex"}
-              flexDirection={"row"}
-              width="100%"
-               sx={{  
-                gap:3,
-              marginBottom: 2}}>
-    <Typography sx={{ fontWeight: "bold" }}>Check-in </Typography>
-    <TimePicker
-      value={checkInTime}
-      onChange={(newValue) => setCheckInTime(newValue)}
-    />
-  </Box>
-  <Box display={"flex"}
-              flexDirection={"row"}
-              width="auto"
-               sx={{  
-                gap:2,
-              marginBottom: 2}}>
-    <Typography sx={{ fontWeight: "bold" }}>Check-Out </Typography>
-    <TimePicker
-      value={checkOutTime}
-      onChange={(newValue) => setCheckOutTime(newValue)}
-    />
-  </Box>
-  <Box  sx={{
-    display: "flex", 
-    justifyContent: "center", // Centers horizontally
-    alignItems: "center",     // Centers vertically (if needed)
-  }} >
-    <Button    type="submit"
-              variant="contained"
-              onClick={handleClick}
-              sx={{
-                bgcolor: "#0F3D3E",
-                "&:hover": {
-                  bgcolor: "#0F3D3E",
-                },
-                width: { sm: "60%", xs: "100%" },
-                borderRadius:"80px",
-              
-              }}>Show  the court</Button>
-  </Box>
-</Box>
-
-    </Box>
-    
-  </Box>
-</Popover>
-
+                <Box
+                  sx={{
+                    p: 4,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "50%", // Inner box height less than popup
+                    overflowY: "auto", // Adds scroll if content overflows
+                    bgcolor: "rgba(255, 255, 255, 0.4)",
+                    borderRadius: 10,
+                    boxShadow: 3,
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    placeholder="Gampola"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    sx={{
+                      bgcolor: "#d9dadb",
+                      borderRadius: "80px",
+                      width: { sm: "100%", xs: "100%" },
+                      height: "auto",
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "transparent", // Removes the default outline
+                        },
+                      },
+                    }}
+                    InputProps={{
+                      startAdornment: <SearchIcon />,
+                    }}
+                  />
+                  <br />
+                  <br />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 2,
+                      flexDirection: "column",
+                      width: "100%",
+                    }}
+                  >
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      width="100%"
+                      sx={{
+                        gap: 3,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Check-in
+                      </Typography>
+                      <DatePicker
+                        value={checkInDate}
+                        onChange={(newValue) => setCheckInDate(newValue)}
+                      />
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      width="100%"
+                      sx={{
+                        gap: 3,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Check-in{" "}
+                      </Typography>
+                      <TimePicker
+                        value={checkInTime}
+                        onChange={(newValue) => setCheckInTime(newValue)}
+                      />
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      width="auto"
+                      sx={{
+                        gap: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Check-Out{" "}
+                      </Typography>
+                      <TimePicker
+                        value={checkOutTime}
+                        onChange={(newValue) => setCheckOutTime(newValue)}
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center", // Centers horizontally
+                        alignItems: "center", // Centers vertically (if needed)
+                      }}
+                    >
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        onClick={handleClick}
+                        sx={{
+                          bgcolor: "#0F3D3E",
+                          "&:hover": {
+                            bgcolor: "#0F3D3E",
+                          },
+                          width: { sm: "60%", xs: "100%" },
+                          borderRadius: "80px",
+                        }}
+                      >
+                        Show the court
+                      </Button>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Popover>
           </Box>
-          <br /><Box sx={{textAlign:"left"}}>
-            <Typography sx={{fontWeight:"bold",fontSize:"15px"}}>Welcome to Future of Futsal</Typography>
+          <br />
+          <Box sx={{ textAlign: "left" }}>
+            <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
+              Welcome to Future of Futsal
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -312,7 +349,7 @@ const Nearcourt: React.FC<{}> = () => {
                 marginTop: 2,
               }}
             >
-            Near your location
+              Near your location
             </Typography>
           </Box>
           <Box
@@ -321,7 +358,7 @@ const Nearcourt: React.FC<{}> = () => {
               display: "flex",
               justifyContent: "center",
               flexDirection: { sm: "column", xs: "column" },
-              gap:2,
+              gap: 2,
               width: { sm: "auto", xs: "500px" },
             }}
           >
