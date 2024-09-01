@@ -23,7 +23,13 @@ const Courtcard: React.FC<CourtcardProps> = ({
 }) => (
   <Box>
     <Card
-      sx={{ bgcolor: " #D9D9D9", width: "180px", height: "400px", mr: 3, p: 2 }}
+      sx={{
+        bgcolor: " #D9D9D9",
+        width: { sm: "180px", xs: "90%" },
+        height: "400px",
+        mr: 3,
+        p: 2,
+      }}
     >
       <Box
         component="img"

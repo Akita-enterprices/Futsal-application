@@ -6,11 +6,11 @@ const Futureoffutsal: React.FC<{}> = () => {
     <Container>
       <Box
         sx={{
-          height: "100vh", // Use full viewport height
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center", // Center vertically
-          alignItems: "center", // Center horizontally
+          justifyContent: "center",
+          alignItems: "center",
           bgcolor: "#f9f8fd",
           color: "black",
           fontSize: "1.5rem",

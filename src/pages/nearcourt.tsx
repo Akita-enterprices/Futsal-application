@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Courtcard from "../component/courtcard";
 import { Link } from "react-router-dom";
+import Slider from "react-slick"; // Import react-slick
 
 interface Court {
   _id: string;
@@ -72,6 +73,25 @@ const Nearcourt: React.FC<{}> = () => {
     },
   }));
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    centerMode: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          // centerMode: true,
+        },
+      },
+    ],
+  };
+
   return (
     <Box
       sx={{
@@ -81,10 +101,12 @@ const Nearcourt: React.FC<{}> = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: "#f9f8fd",
+        // bgcolor: "#f9f8fd",
+        bgcolor: "red",
         fontSize: "1.5rem",
         fontWeight: "bold",
-        maxWidth: "100%",
+
+        width: "100%",
         padding: 2,
       }}
     >
@@ -157,30 +179,31 @@ const Nearcourt: React.FC<{}> = () => {
         </Box>
         <Box
           sx={{
-            alignItems: "flex-start",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: { sm: "row", xs: "row" },
             mt: 2,
-            width: { sm: "auto", xs: "500px" },
+            pl: 5,
+            pr: 5,
+            bgcolor: "pink",
+            width: { sm: "auto", xs: "70%" },
           }}
         >
-          {court.map((court) => (
-            <Link
-              to={`/courtdetails/${court._id}`}
-              key={court._id}
-              style={{ textDecoration: "none" }}
-            >
-              <Courtcard
-                rating={court.rating}
-                link={`/courtdetails/${court._id}`}
-                title={court.futsalName}
-                description={court.address}
-                price={`$ ${court.dayRate}`}
-                image={court.fileName?.url}
-              />
-            </Link>
-          ))}
+          <Slider {...settings}>
+            {court.map((court) => (
+              <Link
+                to={`/courtdetails/${court._id}`}
+                key={court._id}
+                style={{ textDecoration: "none" }}
+              >
+                <Courtcard
+                  rating={court.rating}
+                  link={`/courtdetails/${court._id}`}
+                  title={court.futsalName}
+                  description={court.address}
+                  price={`$ ${court.dayRate}`}
+                  image={court.fileName?.url}
+                />
+              </Link>
+            ))}
+          </Slider>
         </Box>
       </Box>
     </Box>

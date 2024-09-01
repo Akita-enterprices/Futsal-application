@@ -14,6 +14,7 @@ interface CourtData {
   name: string;
   dayRate: number;
   nightRate: number;
+  fileName: { fileName: string; url: string; _id: string };
   // Add other properties as per your data structure
 }
 
@@ -33,7 +34,8 @@ const Courtdetails: React.FC<{}> = () => {
           throw new Error("Failed to fetch court details");
         }
         const data = await response.json();
-        console.log("data", data);
+        console.log("data", data.fileName.url);
+
         setData(data);
       } catch (error) {
         console.error("Error fetching court details:", error);
@@ -109,8 +111,11 @@ const Courtdetails: React.FC<{}> = () => {
       </Box>
       <br />
       <Box
+        component="img"
+        src={data.fileName?.url}
         sx={{
-          bgcolor: "#007EF2",
+          objectFit: "cover",
+          alt: "image",
           height: "40%",
           width: { sm: "40%", xs: "100%" },
           ml: { sm: 45, xs: 0 },
