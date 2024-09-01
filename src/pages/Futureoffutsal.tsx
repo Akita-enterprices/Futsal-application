@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
+import Image1 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg";
 
 const Futureoffutsal: React.FC<{}> = () => {
   return (
     <Container>
       <Box
         sx={{
-          height: "100vh",
+          height: "130vh", // Use full viewport height
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -20,8 +21,26 @@ const Futureoffutsal: React.FC<{}> = () => {
       >
         <Box
           sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <img
+            src={Image1}
+            alt="Futsal Image" // Alt text for the image
+            style={{
+              width: "150px", // Fixed width for circular image
+              height: "150px", // Fixed height for circular image
+              borderRadius: "50%", // Circular image
+              objectFit: "cover", // Ensure image covers the circle
+            }}
+          />
+        </Box>
+        <Box
+          sx={{
             width: { sm: "50%", xs: "80%" },
-
             textAlign: "center", // Center text
             padding: { sm: "90px", xs: "20px" },
           }}
@@ -43,16 +62,15 @@ const Futureoffutsal: React.FC<{}> = () => {
             platform, you can explore a world of futsal facilities, find the
             perfect venue, and book your slots with just a few clicks. Say
             goodbye to the hassle of making phone calls or dealing with complex
-            reservation processes. We've simplified it all for you
+            reservation processes. We've simplified it all for you.
           </Typography>
         </Box>
         <Button
           type="submit"
           variant="contained"
-          href="/createaccount"
+          href="/login"
           sx={{
             bgcolor: "#0F3D3E",
-
             width: { sm: "auto", xs: "50%" },
             borderRadius: 2, // Add margin top for spacing
             "&:hover": {
@@ -63,7 +81,6 @@ const Futureoffutsal: React.FC<{}> = () => {
           <b>Kicking the ball</b>
         </Button>
         <br />
-
         <Typography>
           Already have an account? <a href="/login">login</a>
         </Typography>
@@ -71,4 +88,5 @@ const Futureoffutsal: React.FC<{}> = () => {
     </Container>
   );
 };
+
 export default Futureoffutsal;
