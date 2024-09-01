@@ -105,7 +105,7 @@ const Verifyaccount: React.FC<{}> = () => {
       <Button
         type="submit"
         variant="contained"
-        href="/welcome"
+        href="/nearcourt"
         sx={{
           bgcolor: "#0F3D3E",
           "&:hover": {

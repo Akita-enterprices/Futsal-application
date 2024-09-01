@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import Image3 from "../Asset/_c927b047-e8dc-4e0e-acde-e2500ab7d3f0.jpg"; // Import your image
 
 const Congrats: React.FC<{}> = () => {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,7 @@ const Congrats: React.FC<{}> = () => {
   return (
     <Box
       sx={{
-        height: {sm:"100vh",xs:"100vh"},
+        height: { sm: "100vh", xs: "100vh" },
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -44,8 +45,10 @@ const Congrats: React.FC<{}> = () => {
       >
         <Box
           sx={{
-            bgcolor: "#007EF2",
-            height: { sm: "50%", xs: "40%" },
+            backgroundImage: `url(${Image3})`, // Use the image as background
+            backgroundSize: "cover", // Ensure the image covers the box
+            backgroundPosition: "center", // Center the image
+            height: { sm: "80%", xs: "40%" },
             width: { sm: "30%", xs: "70%" },
             borderRadius: 2,
             display: "flex",
@@ -101,7 +104,7 @@ const Congrats: React.FC<{}> = () => {
             flexDirection: "column",
             alignItems: "center",
             mt: 2,
-            mb:{sm:0,xs:12}
+            mb: { sm: 0, xs: 12 },
           }}
         >
           <Button
