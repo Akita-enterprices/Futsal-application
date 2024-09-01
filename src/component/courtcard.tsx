@@ -24,9 +24,9 @@ const Courtcard: React.FC<CourtcardProps> = ({
   <Box>
     <Card
       sx={{
-        bgcolor: " #D9D9D9",
-        width: { sm: "180px", xs: "90%" },
-        height: "400px",
+        bgcolor: "#D9D9D9",
+        width: "380px",
+        height: "200px",
         mr: 3,
         p: 2,
         display: "flex",
