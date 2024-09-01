@@ -23,71 +23,88 @@ const Courtcard: React.FC<CourtcardProps> = ({
 }) => (
   <Box>
     <Card
-      sx={{ bgcolor: " #D9D9D9", width: "180px", height: "400px", mr: 3, p: 2 }}
+      sx={{
+        bgcolor: "#D9D9D9",
+        width: "380px",
+        height: "200px",
+        mr: 3,
+        p: 2,
+        display: "flex",
+        flexDirection: "row",
+      }}
     >
+      {/* Image */}
       <Box
         component="img"
         src={image}
         alt={title}
         sx={{
-          m: 1,
-          width: "90%",
-          height: "40%",
+          width: "40%",
+          height: "100%",
           objectFit: "cover",
           borderRadius: 3,
         }}
       />
+
+   
       <Box
-        component={"a"}
+        component="a"
         href={link}
         sx={{
-          bgcolor: "#007EF2",
-          borderRadius: 2,
-          width: "30%",
-          height: "6%",
-          ml: "auto",
+          width: "60%",
+          height: "100%",
+          ml: 2,
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           textDecoration: "none",
-          alignItems: "center",
-          justifyContent: "center",
-          mt: 2,
         }}
       >
-        <GradeIcon sx={{ color: "#ffffff", fontSize: "20px", m: "2px" }} />
+    
+        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+          <GradeIcon sx={{ color: "orange", fontSize: "20px", mr: 1 }} />
+          <Typography
+            sx={{
+              color: "black",
+              fontWeight: "bold",
+              fontSize: { sm: "19px", xs: "10px" },
+            }}
+          >
+            {rating}
+          </Typography>
+        </Box>
+
         <Typography
           sx={{
-            color: "black",
-            textAlign: "center",
-            m: "2px",
             fontWeight: "bold",
-            fontSize: "15px",
+            textAlign: "left",
+            mb: 1,
+            fontSize: { sm: "15px", xs: "10px" ,color:"black"},
           }}
         >
-          {rating}
+          {title}
+        </Typography>
+
+     
+        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+          <LocationOnIcon sx={{ fontSize: 18, color: "#0a0a0a" }} />
+          <Typography
+            variant="body2"
+            color="#0a0a0a"
+            sx={{ fontWeight: "bold", ml: 1 }}
+          >
+            {description}
+          </Typography>
+        </Box>
+
+      
+        <Typography
+          variant="body2"
+          color="#0a0a0a"
+          sx={{ textAlign: "left", fontWeight: "bold", mt: "auto" }}
+        >
+          {price}
         </Typography>
       </Box>
-      <Typography
-        variant="h6"
-        component="div"
-        sx={{ mb: 1, fontWeight: "bold", textAlign: "left", ml: 1 }}
-      >
-        {title}
-      </Typography>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-        <LocationOnIcon sx={{ fontSize: 18, color: "#0a0a0a" }} />
-        <Typography variant="body2" color="#0a0a0a" sx={{ fontWeight: "bold" }}>
-          {description}
-        </Typography>
-      </Box>
-      <br />
-      <Typography
-        variant="body2"
-        color="#0a0a0a"
-        sx={{ mb: 2, ml: 1, textAlign: "left", fontWeight: "bold" }}
-      >
-        {price}
-      </Typography>
     </Card>
   </Box>
 );

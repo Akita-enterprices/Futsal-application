@@ -23,6 +23,7 @@ import Availability from "./pages/availability";
 import Review from "./pages/review";
 import Profile from "./pages/profile";
 import AuthGuard from "./auth/AuthGurd";
+import Findcourt from "./pages/findcourt";
 
 const App: React.FC = () => {
   return (
@@ -129,6 +130,7 @@ const App: React.FC = () => {
               </AuthGuard>
             }
           />
+          <Route path="/findcourt" element={<Findcourt/>}/>
         </Routes>
       </div>
     </BrowserRouter>

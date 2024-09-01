@@ -19,5 +19,6 @@
     "Booking":"./Booking",
     "Availability":"./Availability",
     "Review":"./Review",
-    "Profile":"/Profile"
+    "Profile":"/Profile",
+    "Findcourt":"/Findcourt"
 }

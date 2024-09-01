@@ -9,10 +9,10 @@ import {
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
-
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import Image2 from '../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg'; // Import your background image
 
 const Createaccount: React.FC<{}> = () => {
   const [username, setUsername] = useState("");
@@ -25,22 +25,11 @@ const Createaccount: React.FC<{}> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // const response = await axios.post('http://localhost:4000/api/auth/signup', {
-      //   username,
-      //   email,
-      //   password,
-      //   phone,
-      // });
-      // console.log('Response:', response.data);
       await signup(email, password, phone, username);
-
       navigate("/verifyaccount", { state: { phone } });
-      // Handle success (e.g., navigate to another page or show a success message)
     } catch (error) {
       console.error("Error:", error);
-      // Handle error (e.g., show an error message)
     }
-    // Reset form fields
     setUsername("");
     setEmail("");
     setPassword("");
@@ -56,36 +45,54 @@ const Createaccount: React.FC<{}> = () => {
         justifyContent: "center",
         alignItems: "center",
         bgcolor: "#f9f8fd",
+        backgroundImage: `url(${Image2})`, // Add background image
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         color: "black",
         fontSize: "1.5rem",
         fontWeight: "bold",
       }}
     >
-      <Typography
-        sx={{ fontSize: { sm: "30px", xs: "20px" }, fontWeight: "bold" }}
-      >
-        <span style={{ color: "black" }}>Create</span>{" "}
-        <span style={{ color: "#E2DCC8" }}>Account</span>
-      </Typography>
-      <Typography
+      <Box
         sx={{
-          fontSize: { sm: "15px", xs: "14px" },
-          padding: { sm: 0, xs: 3 },
+          width: { sm: 500, xs: 300 },
+          p: 3,
+          bgcolor: "rgba(255, 255, 255, 0.8)", // Slightly transparent background for card view
+          borderRadius: 10,
+          boxShadow: 3,
           textAlign: "center",
         }}
       >
-        Fill your information below or register with your social account
-      </Typography>
-      <Box sx={{ mt: 2, maxWidth: "100%", textAlign: "center" }}>
+        <Typography
+          sx={{ fontSize: { sm: "30px", xs: "20px", }, fontWeight: "bold", mb: 2 }}
+        >
+         Get’s Started
+        </Typography>
+
+        <Typography
+          sx={{
+            fontSize: { sm: "15px", xs: "14px",color:"grey" },
+            padding: { sm: 0, xs: 3 },
+            mb: 2,
+          }}
+        >
+        Get started now and unlock exclusive 
+benefits tailored just for you!
+        </Typography>
+
         <form onSubmit={handleSubmit}>
           <Box>
+          <Typography sx={{  textAlign: "center", mb: 2 }}>
+            _____________ or ____________
+          </Typography>
             <TextField
               placeholder="User name"
-              type="name"
+              type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              sx={{ mb: 2, width: "100%" }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -96,8 +103,6 @@ const Createaccount: React.FC<{}> = () => {
             />
           </Box>
 
-          <br />
-
           <Box>
             <TextField
               placeholder="Email address"
@@ -105,7 +110,7 @@ const Createaccount: React.FC<{}> = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              sx={{ mb: 2, width: "100%" }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -116,16 +121,14 @@ const Createaccount: React.FC<{}> = () => {
             />
           </Box>
 
-          <br />
           <Box>
-            {" "}
             <TextField
               placeholder="Phone number"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              sx={{ mb: 2, width: "100%" }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -135,7 +138,6 @@ const Createaccount: React.FC<{}> = () => {
               }}
             />
           </Box>
-          <br />
 
           <Box>
             <TextField
@@ -144,7 +146,7 @@ const Createaccount: React.FC<{}> = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              sx={{ mb: 2, width: { sm: 500, xs: 300 } }}
+              sx={{ mb: 2, width: "100%" }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -155,8 +157,6 @@ const Createaccount: React.FC<{}> = () => {
             />
           </Box>
 
-          <br />
-
           <Button
             type="submit"
             variant="contained"
@@ -165,24 +165,23 @@ const Createaccount: React.FC<{}> = () => {
               "&:hover": {
                 bgcolor: "#0F3D3E",
               },
-              width: {
-                sm: "50%",
-                xs: "50%",
-              },
+              width: "50%", // Center the button with 50% width
+              mx: "auto",
+              display: "block",
               borderRadius: 2,
               mb: 2,
             }}
           >
             Continue
           </Button>
-          <Typography sx={{ opacity: "35%", textAlign: "center" }}>
-            _______ Or signup with ______
-          </Typography>
+
+         
         </form>
+
+        <Typography sx={{ color: "grey", "& a": { color: "#0F3D3E" } }}>
+          Already have an account? <a href="/login">Login</a>
+        </Typography>
       </Box>
-      <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
-        Already have an account? <a href="/login">login</a>
-      </Typography>
     </Box>
   );
 };
