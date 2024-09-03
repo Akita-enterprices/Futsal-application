@@ -38,7 +38,7 @@ const Payment: React.FC<{}> = () => {
     }
 
     const response = await fetch(
-      "http://localhost:4000/api/payments/create-payment-intent",
+      `${process.env.REACT_APP_API_URL}/api/payments/create-payment-intent`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
