@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -15,10 +15,17 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useNavigate } from "react-router-dom";
+
+const MySwal = withReactContent(Swal);
 
 const Payment: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -37,34 +44,58 @@ const Payment: React.FC<{}> = () => {
       return;
     }
 
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/payments/create-payment-intent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 353500, currency: "LKR" }),
-      }
-    );
+    setLoading(true);
 
-    const { clientSecret } = await response.json();
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/payments/create-payment-intent`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: 353500, currency: "LKR" }),
+        }
+      );
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
-        payment_method: {
-          card: cardNumberElement,
-          billing_details: {
-            name: "shadhir", // This can be collected from the form as well
+      const { clientSecret } = await response.json();
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardNumberElement,
+            billing_details: {
+              name: "shadhir", // This can be collected from the form as well
+            },
           },
-        },
-      }
-    );
+        }
+      );
 
-    if (error) {
-      console.error("Error confirming card payment:", error);
-    } else if (paymentIntent?.status === "succeeded") {
-      console.log("Payment successful:", paymentIntent);
-      // Handle successful payment (e.g., show a success message)
+      if (error) {
+        MySwal.fire({
+          title: "Payment Failed",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      } else if (paymentIntent?.status === "succeeded") {
+        MySwal.fire({
+          title: "Payment Successful!",
+          text: "Your payment has been processed successfully.",
+          icon: "success",
+          confirmButtonText: "Great!",
+        });
+        navigate("/congrats");
+        // Handle successful payment (e.g., navigate to a success page)
+      }
+    } catch (error) {
+      MySwal.fire({
+        title: "Error",
+        text: "An error occurred while processing your payment. Please try again.",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -249,6 +280,7 @@ const Payment: React.FC<{}> = () => {
         <Button
           type="submit"
           variant="contained"
+          disabled={loading}
           sx={{
             bgcolor: "#0F3D3E",
             "&:hover": {
@@ -261,7 +293,7 @@ const Payment: React.FC<{}> = () => {
             mb: 2,
           }}
         >
-          Pay Now
+          {loading ? "Processing..." : "Pay Now"}
         </Button>
       </Box>
     </Container>
