@@ -24,6 +24,7 @@ interface Court {
 
 const Nearcourt: React.FC<{}> = () => {
   const [court, setCourt] = useState<Court[]>([]);
+  const [showAll, setShowAll] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [location, setLocation] = useState("");
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(dayjs());
@@ -92,6 +93,8 @@ const Nearcourt: React.FC<{}> = () => {
     },
   }));
 
+  const visibleCourts = showAll ? court : court.slice(0, 2);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box
@@ -121,203 +124,12 @@ const Nearcourt: React.FC<{}> = () => {
             </Typography>
             <Typography sx={{ fontWeight: "bold" }}>
               <LocationOnIcon sx={{ fontSize: "15px", color: "purple" }} />{" "}
-              Watadeniya,Gampola
+              Watadeniya, Gampola
             </Typography>
           </Box>
-          <Box
-            sx={{
-              width: { sm: "50%", xs: "85%" },
-              height: { sm: "auto", xs: "auto" },
-              marginTop: 3,
-              marginLeft: { sm: 2, xs: "0%" },
-              marginRight: { sm: 0, xs: "auto" },
-              textAlign: "center",
-            }}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={handleClick}
-              sx={{
-                bgcolor: "#0F3D3E",
-                "&:hover": {
-                  bgcolor: "#0F3D3E",
-                },
-                width: { sm: "100%", xs: "100%" },
-                borderRadius: "80px",
-              }}
-            >
-              Find the available time
-            </Button>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  width: { sm: 500, xs: 300 },
-                  p: 3,
-
-                  textAlign: "left",
-                  height: "100%",
-                }}
-              >
-                <Box
-                  sx={{
-                    alignItems: "center",
-                    display: "flex",
-                    justifyContent: "center",
-                    mb: 3,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      bgcolor: "grey",
-                      height: { sm: "20%", xs: "30%" },
-                      width: { sm: "50%", xs: "70%" },
-                      borderRadius: 10,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center", // Center the text vertically
-                      textAlign: "center", // Ensure the text is centered
-                      padding: 1, // Optional: add padding for a better look
-                    }}
-                  >
-                    <Typography>Find the available time</Typography>
-                  </Box>
-                </Box>
-
-                <Box
-                  sx={{
-                    p: 4,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "50%", // Inner box height less than popup
-                    overflowY: "auto", // Adds scroll if content overflows
-                    bgcolor: "rgba(255, 255, 255, 0.4)",
-                    borderRadius: 10,
-                    boxShadow: 3,
-                  }}
-                >
-                  <TextField
-                    type="text"
-                    placeholder="Gampola"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    sx={{
-                      bgcolor: "#d9dadb",
-                      borderRadius: "80px",
-                      width: { sm: "100%", xs: "100%" },
-                      height: "auto",
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: "transparent", // Removes the default outline
-                        },
-                      },
-                    }}
-                    InputProps={{
-                      startAdornment: <SearchIcon />,
-                    }}
-                  />
-                  <br />
-                  <br />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      gap: 2,
-                      flexDirection: "column",
-                      width: "100%",
-                    }}
-                  >
-                    <Box
-                      display={"flex"}
-                      flexDirection={"row"}
-                      width="100%"
-                      sx={{
-                        gap: 3,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "bold" }}>
-                        Check-in
-                      </Typography>
-                      <DatePicker
-                        value={checkInDate}
-                        onChange={(newValue) => setCheckInDate(newValue)}
-                      />
-                    </Box>
-                    <Box
-                      display={"flex"}
-                      flexDirection={"row"}
-                      width="100%"
-                      sx={{
-                        gap: 3,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "bold" }}>
-                        Check-in{" "}
-                      </Typography>
-                      <TimePicker
-                        value={checkInTime}
-                        onChange={(newValue) => setCheckInTime(newValue)}
-                      />
-                    </Box>
-                    <Box
-                      display={"flex"}
-                      flexDirection={"row"}
-                      width="auto"
-                      sx={{
-                        gap: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "bold" }}>
-                        Check-Out{" "}
-                      </Typography>
-                      <TimePicker
-                        value={checkOutTime}
-                        onChange={(newValue) => setCheckOutTime(newValue)}
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center", // Centers horizontally
-                        alignItems: "center", // Centers vertically (if needed)
-                      }}
-                    >
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        onClick={handleClick}
-                        sx={{
-                          bgcolor: "#0F3D3E",
-                          "&:hover": {
-                            bgcolor: "#0F3D3E",
-                          },
-                          width: { sm: "60%", xs: "100%" },
-                          borderRadius: "80px",
-                        }}
-                      >
-                        Show the court
-                      </Button>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            </Popover>
-          </Box>
-          <br />
-          <Box sx={{ textAlign: "left" }}>
+          <Box sx={{ mt: 2, textAlign: "left" }}>
             <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
-              Welcome to Future of Futsal
+              Welcome to the Future of Futsal
             </Typography>
           </Box>
           <Box
@@ -325,7 +137,6 @@ const Nearcourt: React.FC<{}> = () => {
               textAlign: "center",
               mt: 2,
               width: { sm: "75%", xs: "270px" },
-              // margin: "0 auto",
               bgcolor: "#D9D9D9",
               borderRadius: "80px",
             }}
@@ -335,49 +146,111 @@ const Nearcourt: React.FC<{}> = () => {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search address,city,location"
+                placeholder="Search address, city, location"
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
           </Box>
           <br />
-          <Box sx={{ width: { sm: "40%", xs: "40%" } }}>
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: { sm: "17px", xs: "15px" },
-                marginTop: 2,
-              }}
-            >
+          <Box sx={{ textAlign: "left" ,display:"flex",flexDirection:"row",gap:{sm:26,xs:15},width:{sm:"450px",xs:"350px"} }}>
+            <Typography sx={{ fontWeight: "bold", fontSize: {sm:"17px",xs:"13px"}}}>
               Near your location
             </Typography>
+            
+            {!showAll && court.length > 2 && (
+              <Button
+                onClick={() => setShowAll(true)}
+                sx={{ textTransform: "none", color: "#007EF2" }}
+              >
+                See All
+              </Button>
+            )}
           </Box>
           <Box
             sx={{
-              alignItems: "flex-start",
               display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
               justifyContent: "center",
-              flexDirection: { sm: "column", xs: "column" },
-              gap: 2,
-              width: { sm: "auto", xs: "500px" },
             }}
           >
-            {court.map((court) => (
-              <Link
-                to={`/courtdetails/${court._id}`}
-                key={court._id}
-                style={{ textDecoration: "none" }}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { sm: "row", xs: "row" },
+                gap: 2,
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              {visibleCourts.map((court) => (
+                <Link
+                  to={`/courtdetails/${court._id}`}
+                  key={court._id}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Courtcard
+                    rating={court.rating}
+                    link={`/courtdetails/${court._id}`}
+                    title={court.futsalName}
+                    description={court.address}
+                    price={`$ ${court.dayRate}`}
+                    image={court.fileName?.url}
+                  />
+                </Link>
+              ))}
+            </Box>
+
+          </Box><br/>
+          <Box sx={{ textAlign: "left" ,display:"flex",flexDirection:"row",gap:{sm:32,xs:15},width:{sm:"450px",xs:"350px"} }}>
+            <Typography sx={{ fontWeight: "bold", fontSize: {sm:"17px",xs:"13px"}}}>
+              All courts
+            </Typography>
+            
+            {!showAll && court.length > 2 && (
+              <Button
+                onClick={() => setShowAll(true)}
+                sx={{ textTransform: "none", color: "#007EF2" }}
               >
-                <Courtcard
-                  rating={court.rating}
-                  link={`/courtdetails/${court._id}`}
-                  title={court.futsalName}
-                  description={court.address}
-                  price={`$ ${court.dayRate}`}
-                  image={court.fileName?.url}
-                />
-              </Link>
-            ))}
+                See All
+              </Button>
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { sm: "row", xs: "row" },
+                gap: 2,
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              {visibleCourts.map((court) => (
+                <Link
+                  to={`/courtdetails/${court._id}`}
+                  key={court._id}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Courtcard
+                    rating={court.rating}
+                    link={`/courtdetails/${court._id}`}
+                    title={court.futsalName}
+                    description={court.address}
+                    price={`$ ${court.dayRate}`}
+                    image={court.fileName?.url}
+                  />
+                </Link>
+              ))}
+            </Box>
+
           </Box>
         </Box>
       </Box>
