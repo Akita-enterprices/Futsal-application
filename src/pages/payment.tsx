@@ -1,193 +1,271 @@
 import React from "react";
-import { Box, TextField, Typography, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  Container,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 const Payment: React.FC<{}> = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) {
+      console.error("Stripe.js has not loaded yet.");
+      return;
+    }
+
+    const cardNumberElement = elements.getElement(CardNumberElement);
+    const cardExpiryElement = elements.getElement(CardExpiryElement);
+    const cardCvcElement = elements.getElement(CardCvcElement);
+
+    if (!cardNumberElement || !cardExpiryElement || !cardCvcElement) {
+      console.error("Stripe elements not found.");
+      return;
+    }
+
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/payments/create-payment-intent`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 353500, currency: "LKR" }),
+      }
+    );
+
+    const { clientSecret } = await response.json();
+
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: cardNumberElement,
+          billing_details: {
+            name: "shadhir", // This can be collected from the form as well
+          },
+        },
+      }
+    );
+
+    if (error) {
+      console.error("Error confirming card payment:", error);
+    } else if (paymentIntent?.status === "succeeded") {
+      console.log("Payment successful:", paymentIntent);
+      // Handle successful payment (e.g., show a success message)
+    }
+  };
+
   const goBack = () => {
     window.history.back();
   };
+
   return (
-    <Box
+    <Container
       sx={{
-        height: { sm: "100vh", xs: "130vh" },
-        width: { sm: "100%", xs: "100%" },
+        bgcolor: "#f9f8fd",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: "#f9f8fd",
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-        maxWidth: "100%",
+        padding: { xs: 2, sm: 4 },
       }}
     >
       <Box
         sx={{
-          width: { sm: "100%", xs: "100%" },
+          width: "100%",
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
           alignItems: "center",
+          mb: 4,
         }}
       >
-        <ArrowBackIcon onClick={goBack} sx={{ color: "#007EF2" }} />{" "}
+        <ArrowBackIcon
+          onClick={goBack}
+          sx={{ color: "#007EF2", cursor: "pointer" }}
+        />
         <Typography
           sx={{
-            fontSize: { sm: "18px", xs: "20px" },
-            width: { sm: "30%", xs: "80%" },
+            fontSize: { xs: "18px", sm: "20px" },
             textAlign: "center",
             color: "#007EF2",
             fontWeight: "bold",
+            flexGrow: 1,
           }}
         >
           Payment
         </Typography>
-      </Box>{" "}
-      <br />
+      </Box>
+
       <Box
         sx={{
           bgcolor: "#e9f5f9",
-          width: { sm: "40%", xs: "100%" },
-          height: "20%",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex", // Added display:flex to center its children
-          flexDirection: "column",
-          ml: { sm: 50, xs: 0 },
+          padding: { xs: 2, sm: 3 },
+          borderRadius: 2,
+          width: "100%",
+          maxWidth: "500px",
+          mb: 4,
         }}
       >
-        <Typography>Total Price</Typography>
-
+        <Typography textAlign="center">Total Price</Typography>
         <Typography
           sx={{
             color: "#007EF2",
             fontWeight: "bold",
-            fontSize: { sm: "30px", xs: "20px" },
+            fontSize: { xs: "24px", sm: "30px" },
+            textAlign: "center",
           }}
         >
-          RS 3535/ =
+          RS 3535/=
         </Typography>
-        <Typography sx={{ opacity: "60%" }}>5% vst included</Typography>
+        <Typography textAlign="center" sx={{ opacity: "60%" }}>
+          5% VAT included
+        </Typography>
       </Box>
-      <Box sx={{ textAlign: "center", mt: 3 }}>
-        <Typography>Payment method</Typography>
-      </Box>
+
+      <Typography>Payment method</Typography>
+
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: { sm: "center", xs: "left" },
-          justifyContent: { sm: "center", xs: "left" },
-          width: { sm: "100%", xs: "100%" },
-          padding: { sm: 0, xs: 2 },
+          width: "100%",
+          maxWidth: "500px",
+          mt: 2,
         }}
       >
-        <Typography
-          mr={29}
-          mt={2}
-          sx={{ opacity: "50%", fontSize: { sm: "18px", xs: "16px" } }}
-        >
+        <Typography sx={{ opacity: "50%", fontSize: "16px", mb: 1 }}>
           <b>Card Holder Name</b>
         </Typography>
-        <TextField
-          placeholder="Your Name"
-          type="name"
-          sx={{
-            mt: 2,
-            width: { sm: "30%", xs: "60%" },
-          }}
-        />
-        <Typography
-          mr={{ sm: 34, xs: 2 }}
-          mt={{ sm: 2, xs: 2 }}
-          sx={{ opacity: "50%", fontSize: { sm: "18px", xs: "16px" } }}
-        >
+        <TextField placeholder="Your Name" fullWidth sx={{ mb: 2 }} />
+
+        <Typography sx={{ opacity: "50%", fontSize: "16px", mb: 1 }}>
           <b>Card Number</b>
         </Typography>
-        <TextField
-          label="**** **** ****"
-          type="password"
+        <Box
           sx={{
-            mt: 2,
-            width: { sm: "30%", xs: "70%" },
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            padding: "10px",
+            marginBottom: "20px",
+            backgroundColor: "#fff",
           }}
-        />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          width: { sm: "100%", xs: "100%" },
-          padding: { sm: 0, xs: 2 },
-        }}
-      >
-        {" "}
-        <Typography ml={{ sm: 54, xs: 0 }} mt={2} sx={{ opacity: "50%" }}>
-          <b>Expiry date</b>
-        </Typography>
-        <Typography ml={15} mt={2} sx={{ opacity: "50%" }}>
-          <b>CVV</b>
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          width: { sm: "100%", xs: "80%" },
-          padding: { sm: 0, xs: 1 },
-        }}
-      >
-        <TextField
-          label="MM/YY"
-          type="name"
-          sx={{
-            mt: 2,
-            width: { sm: "15%", xs: "50%" },
-          }}
-        />
+        >
+          <CardNumberElement
+            options={{
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "#424770",
+                  "::placeholder": {
+                    color: "#aab7c4",
+                  },
+                },
+                invalid: {
+                  color: "#9e2146",
+                },
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          label="****"
-          type="password"
-          sx={{
-            mt: 2,
-            width: { sm: "15%", xs: "40%" },
-            ml: 2,
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          width: { sm: "100%", xs: "100%" },
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          mt: "50px",
-        }}
-      >
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Typography sx={{ opacity: "50%", fontSize: "16px", mb: 1 }}>
+              <b>Expiry date</b>
+            </Typography>
+            <Box
+              sx={{
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                padding: "10px",
+                backgroundColor: "#fff",
+              }}
+            >
+              <CardExpiryElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: "16px",
+                      color: "#424770",
+                      "::placeholder": {
+                        color: "#aab7c4",
+                      },
+                    },
+                    invalid: {
+                      color: "#9e2146",
+                    },
+                  },
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography sx={{ opacity: "50%", fontSize: "16px", mb: 1 }}>
+              <b>CVV</b>
+            </Typography>
+            <Box
+              sx={{
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                padding: "10px",
+                backgroundColor: "#fff",
+              }}
+            >
+              <CardCvcElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: "16px",
+                      color: "#424770",
+                      "::placeholder": {
+                        color: "#aab7c4",
+                      },
+                    },
+                    invalid: {
+                      color: "#9e2146",
+                    },
+                  },
+                }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+
         <Button
           type="submit"
           variant="contained"
-          href="/congrats"
           sx={{
             bgcolor: "#0F3D3E",
             "&:hover": {
-              bgcolor: "#0F3D3E", // Same color as background
+              bgcolor: "#0F3D3E",
             },
-            fontSize: { sm: "18px", xs: "13px" },
-
-            width: {
-              sm: "25%",
-              xs: "65%",
-            }, // Add margin top for spacing
+            fontSize: { xs: "16px", sm: "18px" },
+            width: "100%",
             borderRadius: 2,
+            mt: 3,
             mb: 2,
           }}
         >
           Pay Now
         </Button>
       </Box>
-    </Box>
+    </Container>
   );
 };
+
 export default Payment;
