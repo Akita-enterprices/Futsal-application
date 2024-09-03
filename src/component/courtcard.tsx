@@ -25,8 +25,8 @@ const Courtcard: React.FC<CourtcardProps> = ({
     <Card
       sx={{
         bgcolor: "#D9D9D9",
-        width: "380px",
-        height: "200px",
+        width: "300px", // Reduced width
+        height: "150px", // Reduced height
         mr: 3,
         p: 2,
         display: "flex",
@@ -39,18 +39,19 @@ const Courtcard: React.FC<CourtcardProps> = ({
         src={image}
         alt={title}
         sx={{
-          width: "40%",
+          width: "35%", // Reduced image width
           height: "100%",
           objectFit: "cover",
           borderRadius: 3,
         }}
       />
 
+      {/* Card content */}
       <Box
         component="a"
         href={link}
         sx={{
-          width: "60%",
+          width: "65%", // Adjusted content width
           height: "100%",
           ml: 2,
           display: "flex",
@@ -58,41 +59,57 @@ const Courtcard: React.FC<CourtcardProps> = ({
           textDecoration: "none",
         }}
       >
+        {/* Rating */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <GradeIcon sx={{ color: "orange", fontSize: "20px", mr: 1 }} />
+          <GradeIcon sx={{ color: "orange", fontSize: "18px", mr: 1 }} />
           <Typography
             sx={{
               color: "black",
               fontWeight: "bold",
-              fontSize: { sm: "19px", xs: "10px" },
+              fontSize: { sm: "17px", xs: "10px" },
             }}
           >
             {rating}
           </Typography>
         </Box>
 
+        {/* Title */}
         <Typography
           sx={{
             fontWeight: "bold",
             textAlign: "left",
             mb: 1,
-            fontSize: { sm: "15px", xs: "10px", color: "black" },
+            fontSize: { sm: "13px", xs: "10px" },
+            color: "black",
           }}
         >
           {title}
         </Typography>
 
+        {/* Description */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <LocationOnIcon sx={{ fontSize: 18, color: "#0a0a0a" }} />
+          <LocationOnIcon sx={{ fontSize: 16, color: "#0a0a0a" }} />
           <Typography
             variant="body2"
             color="#0a0a0a"
-            sx={{ fontWeight: "bold", ml: 1 }}
+            sx={{ fontWeight: "bold", ml: 1, fontSize: "12px" }}
           >
             {description}
           </Typography>
         </Box>
 
+        {/* Day and Night Rates */}
+        <Box sx={{ mb: 1 }}>
+          <Typography
+            fontSize={{ sm: "12px", xs: "10px" }}
+            sx={{ color: "black", mr: 12 }}
+          >
+            <span style={{ fontWeight: "bold" }}>Day: 2500/=</span> <br />
+            <span style={{ fontWeight: "bold" }}>Night: 3000/=</span>
+          </Typography>
+        </Box>
+
+        {/* Price */}
         <Typography
           variant="body2"
           color="#0a0a0a"

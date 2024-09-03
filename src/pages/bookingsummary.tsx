@@ -140,21 +140,25 @@ const Bookingsummary: React.FC<{}> = () => {
         </Box>
       </Box>
       <Box
-        sx={{
-          width: { sm: "80%", xs: "90%" },
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center", // Align text center to center the <hr>
-          ml: { xs: 2, sm: 18 },
-        }}
-      >
-        {" "}
-        <hr
-          style={{
-            width: "100%", // Set the width of the <hr> to 100%
-          }}
-        />
-      </Box>
+  sx={{
+    width: { sm: "45%", xs: "90%" },
+    display: "flex",
+    justifyContent: "center", // Center horizontally
+    alignItems: "center", // Center vertically
+    textAlign: "center", // Align text center to center the <hr>
+    ml: { xs: 2, sm: 42 },
+    my: 2, // Add vertical margin for spacing
+  }}
+>
+  <hr
+    style={{
+      width: "100%", // Set the width of the <hr> to 100%
+      border: "none", // Remove default border
+      borderTop: "1px solid #ccc", // Add a light border for visibility
+    }}
+  />
+</Box>
+
 
       <br />
       <Box
