@@ -18,6 +18,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
+import CustomerRatingCard from "../component/CustomerRatingCard";
+import { customers } from "../data/customerData";
+import TimeSlotList from "../component/TimeSlotList";
+import { timeSlots } from "../data/timeSlotsData";
 
 interface CourtData {
   futsalName: string;
@@ -25,6 +29,7 @@ interface CourtData {
   dayRate: number;
   nightRate: number;
   fileName: { fileName: string; url: string; _id: string };
+
   // Add other properties as per your data structure
 }
 
@@ -40,8 +45,6 @@ const Courtdetails: React.FC<{}> = () => {
   const id = open ? "simple-popover" : undefined;
   const [showMore, setShowMore] = useState(false);
 
-  // Fetch court details using courtId
-  // Example fetch or useEffect to fetch court details based on courtId
   useEffect(() => {
     const fetchCourtDetails = async () => {
       try {
@@ -83,6 +86,16 @@ const Courtdetails: React.FC<{}> = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleClickOpen2 = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose2 = () => {
+    setDialogOpen(false);
+  };
   if (!data) {
     return (
       <Box
@@ -106,7 +119,6 @@ const Courtdetails: React.FC<{}> = () => {
     { icon: <WifiIcon sx={{ mr: 1 }} />, name: "Cafeteria Access" }, // Additional items
   ];
 
-
   const toggleShowMore = () => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
@@ -120,8 +132,7 @@ const Courtdetails: React.FC<{}> = () => {
           fontWeight: "bold",
           justifyContent: "center",
           alignItems: "center",
-          maxWidth:"100%"
-         
+          maxWidth: "100%",
         }}
       >
         {/* <Box
@@ -173,13 +184,16 @@ const Courtdetails: React.FC<{}> = () => {
         ></Box>
         <br />
         <Box sx={{ ml: { sm: 45, xs: 0 }, padding: { sm: 0, xs: 2 } }}>
-          <Box sx={{display:"flex",flexDirection:"row",gap:20}}>  <Typography
-            sx={{ fontWeight: "bold", fontSize: { sm: "20px", xs: "15px" } }}
-          >
-            {data.futsalName}
-          </Typography>
-          <FavoriteBorderOutlinedIcon/></Box>
-        
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 20 }}>
+            {" "}
+            <Typography
+              sx={{ fontWeight: "bold", fontSize: { sm: "20px", xs: "15px" } }}
+            >
+              {data.futsalName}
+            </Typography>
+            <FavoriteBorderOutlinedIcon />
+          </Box>
+
           <br />
           <Box
             mt={2}
@@ -219,8 +233,6 @@ const Courtdetails: React.FC<{}> = () => {
                 {" "}
                 <a href="/">4.5 (120 Reviews)</a>
               </Typography>
-             
-             
             </Box>
             <Box>
               <Typography fontSize={{ sm: "18px", xs: "11px" }}>
@@ -265,16 +277,18 @@ const Courtdetails: React.FC<{}> = () => {
               <b>{data.name}</b>
               <br /> Receptionist
             </Typography>
-            <Card  sx={{
+            <Card
+              sx={{
                 color: "grey",
                 bgcolor: "white",
                 borderRadius: "30%",
                 padding: "0.5rem",
                 ml: 14,
-              }}> <LocalPhoneRoundedIcon /></Card>
-
-           
-          
+              }}
+            >
+              {" "}
+              <LocalPhoneRoundedIcon />
+            </Card>
           </Box>
           <br />
 
@@ -318,100 +332,25 @@ const Courtdetails: React.FC<{}> = () => {
             </Box>
 
             <Box>
-              <Typography fontWeight={"bold"} mt={3}sx={{fontSize: { sm: "20px", xs: "15px" }}}>
+              <Typography
+                fontWeight={"bold"}
+                mt={3}
+                sx={{ fontSize: { sm: "20px", xs: "15px" } }}
+              >
                 Available Time Slots
               </Typography>
             </Box>
-            <Grid
-  container
-  mt={2}
-  spacing={1} // Adjust the spacing between items
-  width={{ sm: "60%", xs: "300px" }}
-  pl={1}
->
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>10:30 a.m</Typography>
-    </Box>
-  </Grid>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>17:30 p.m</Typography>
-    </Box>
-  </Grid>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>12:30 p.m</Typography>
-    </Box>
-  </Grid>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>18:30 a.m</Typography>
-    </Box>
-  </Grid>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>14:30 p.m</Typography>
-    </Box>
-  </Grid>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        borderRadius: 1,
-        height: "auto",
-        width: { sm: "40%", xs: "70%" },
-        bgcolor: "#D9D9D9",
-      }}
-    >
-      <Typography fontWeight={"bold"}>19:30 p.m</Typography>
-    </Box>
-  </Grid>
-</Grid>
-
+            <Box sx={{ p: 2, width: { sm: "60%", xs: "100%" } }}>
+              <TimeSlotList slots={timeSlots} />
+            </Box>
             <br />
-
             <Box>
               <Typography
                 sx={{
                   fontWeight: "bold",
                   opacity: "90%",
                   mt: 2,
-                  fontSize: { sm: "20px", xs: "15px" }
+                  fontSize: { sm: "20px", xs: "15px" },
                 }}
               >
                 About location's neighborhood
@@ -425,7 +364,12 @@ const Courtdetails: React.FC<{}> = () => {
               width={{ sm: "60%", xs: "100%" }}
               sx={{ gap: 8 }}
             >
-              <Typography sx={{ textAlign: "justify" ,    fontSize: { sm: "16px", xs: "13px" }}}>
+              <Typography
+                sx={{
+                  textAlign: "justify",
+                  fontSize: { sm: "16px", xs: "13px" },
+                }}
+              >
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry s standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -440,7 +384,7 @@ const Courtdetails: React.FC<{}> = () => {
                 variant="contained"
                 onClick={handleClick}
                 sx={{
-                  ml: {sm:15,xs:7},
+                  ml: { sm: 15, xs: 7 },
                   fontWeight: "bold",
                   bgcolor: "#0F3D3E",
                   height: "auto",
@@ -572,137 +516,29 @@ const Courtdetails: React.FC<{}> = () => {
                   </Box>
                 </Box>
               </Popover>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 ,fontSize: { sm: "20px", xs: "15px" }}}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  fontSize: { sm: "20px", xs: "15px" },
+                }}
+              >
                 <Typography sx={{ fontWeight: "bold" }}>
                   Testimonials
                 </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", mt: 2 }}>
-  <PersonRoundedIcon
-    sx={{
-      color: "white",
-      bgcolor: "lightblue",
-      borderRadius: "50%",
-      padding: "0.5rem",
-    }}
-  />
-  <Box sx={{ ml: 2 }}>
-    <Typography sx={{ fontSize: { sm: "15px", xs: "12px" } }}>
-      <b>Bijay Shahi</b>
-    </Typography>
-    <Box sx={{ display: "flex", mt: 1 }}>
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-    </Box>
-  </Box>
-</Box>
-
-                <Box>
-               
-                  <Typography sx={{ fontSize: { sm: "16px", xs: "13px" },textAlign:"justify"}}>
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum
-                  </Typography>
-                </Box>
-
-                <Box>
-                <Box sx={{ display: "flex", flexDirection: "row", mt: 2 }}>
-  <PersonRoundedIcon
-    sx={{
-      color: "white",
-      bgcolor: "lightblue",
-      borderRadius: "50%",
-      padding: "0.5rem",
-    }}
-  />
-  <Box sx={{ ml: 2 }}>
-    <Typography sx={{ fontSize: { sm: "15px", xs: "12px" } }}>
-      <b>C_LU Pokhrel</b>
-    </Typography>
-    <Box sx={{ display: "flex", mt: 1 }}>
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-      <GradeIcon
-        sx={{
-          color: "yellow",
-          fontSize: { sm: "20px", xs: "20px" },
-          m: "2px",
-        }}
-      />
-    </Box>
-  </Box>
-</Box>
-
-<Typography sx={{ fontSize: { sm: "16px", xs: "13px" ,textAlign:"justify"}}}>
-        {showMore
-          ? "but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-          : "but also the leap into electronic typesetting, remaining essentially unchanged..."}
-       <Button onClick={toggleShowMore}sx={{ fontSize: { sm: "16px", xs: "12px" }}}>
-        {showMore ? "Read Less" : "Read More"}
-      </Button>
-      </Typography>
-     
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 2,
+                    flexWrap: "wrap", // Allows the cards to wrap to the next row if they don't fit
+                  }}
+                >
+                  {customers.map((customer, index) => (
+                    <CustomerRatingCard key={index} customer={customer} />
+                  ))}
                 </Box>
               </Box>
             </Box>
