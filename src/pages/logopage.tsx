@@ -12,8 +12,8 @@ const LogoPage: React.FC<{}> = () => {
     const timeoutId = setTimeout(() => {
       console.log("logo page", isLoggedIn);
       if (isLoggedIn) {
-        return navigate("/welcome");
-        // return console.log("not authenticated");
+        return navigate("/nearcourt");
+        // return console.log("not authenticated")
       }
       navigate("/Futureoffutsal");
     }, 6000);

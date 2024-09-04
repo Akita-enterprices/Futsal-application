@@ -24,6 +24,7 @@ interface Court {
 
 const Nearcourt: React.FC<{}> = () => {
   const [court, setCourt] = useState<Court[]>([]);
+  const [showAllNearLocation, setShowAllNearLocation] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [location, setLocation] = useState("");
@@ -93,8 +94,6 @@ const Nearcourt: React.FC<{}> = () => {
     },
   }));
 
-  const visibleCourts = showAll ? court : court.slice(0, 2);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box
@@ -152,17 +151,27 @@ const Nearcourt: React.FC<{}> = () => {
             </Search>
           </Box>
           <br />
-          <Box sx={{ textAlign: "left" ,display:"flex",flexDirection:"row",gap:{sm:26,xs:15},width:{sm:"450px",xs:"350px"} }}>
-            <Typography sx={{ fontWeight: "bold", fontSize: {sm:"17px",xs:"13px"}}}>
+          <Box
+            sx={{
+              textAlign: "left",
+              display: "flex",
+              flexDirection: "row",
+              gap: { sm: 26, xs: 15 },
+              width: { sm: "450px", xs: "350px" },
+            }}
+          >
+            <Typography
+              sx={{ fontWeight: "bold", fontSize: { sm: "17px", xs: "13px" } }}
+            >
               Near your location
             </Typography>
-            
-            {!showAll && court.length > 2 && (
+
+            {court.length > 2 && (
               <Button
-                onClick={() => setShowAll(true)}
+                onClick={() => setShowAllNearLocation(!showAllNearLocation)}
                 sx={{ textTransform: "none", color: "#007EF2" }}
               >
-                See All
+                {showAllNearLocation ? "See Less" : "See All"}
               </Button>
             )}
           </Box>
@@ -172,47 +181,70 @@ const Nearcourt: React.FC<{}> = () => {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              width: "100%",
             }}
           >
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { sm: "row", xs: "row" },
+                flexDirection: showAllNearLocation ? "column" : "row",
                 gap: 2,
                 width: "100%",
-                justifyContent: "center",
+                overflowX: showAllNearLocation ? "visible" : "auto",
+                justifyContent: showAllNearLocation ? "flex-start" : "center",
+                alignItems: "center",
+                padding: showAllNearLocation ? 0 : "0 10px",
+                whiteSpace: showAllNearLocation ? "normal" : "nowrap",
+                scrollBehavior: "smooth",
               }}
             >
-              {visibleCourts.map((court) => (
-                <Link
-                  to={`/courtdetails/${court._id}`}
-                  key={court._id}
-                  style={{ textDecoration: "none" }}
-                >
-                  <Courtcard
-                    rating={court.rating}
-                    link={`/courtdetails/${court._id}`}
-                    title={court.futsalName}
-                    description={court.address}
-                    price={`$ ${court.dayRate}`}
-                    image={court.fileName?.url}
-                  />
-                </Link>
-              ))}
+              {court
+                .slice(0, showAllNearLocation ? court.length : 2)
+                .map((court) => (
+                  <Link
+                    to={`/courtdetails/${court._id}`}
+                    key={court._id}
+                    style={{
+                      textDecoration: "none",
+                      display: "inline-block",
+                      width: showAllNearLocation ? "100%" : "auto",
+                    }}
+                  >
+                    <Courtcard
+                      rating={court.rating}
+                      link={`/courtdetails/${court._id}`}
+                      title={court.futsalName}
+                      description={court.address}
+                      price={`$ ${court.dayRate}`}
+                      image={court.fileName?.url}
+                    />
+                  </Link>
+                ))}
             </Box>
+          </Box>
 
-          </Box><br/>
-          <Box sx={{ textAlign: "left" ,display:"flex",flexDirection:"row",gap:{sm:32,xs:15},width:{sm:"450px",xs:"350px"} }}>
-            <Typography sx={{ fontWeight: "bold", fontSize: {sm:"17px",xs:"13px"}}}>
+          <br />
+          <Box
+            sx={{
+              textAlign: "left",
+              display: "flex",
+              flexDirection: "row",
+              gap: { sm: 32, xs: 15 },
+              width: { sm: "450px", xs: "350px" },
+            }}
+          >
+            <Typography
+              sx={{ fontWeight: "bold", fontSize: { sm: "17px", xs: "13px" } }}
+            >
               All courts
             </Typography>
-            
-            {!showAll && court.length > 2 && (
+
+            {court.length > 2 && (
               <Button
-                onClick={() => setShowAll(true)}
+                onClick={() => setShowAll(!showAll)}
                 sx={{ textTransform: "none", color: "#007EF2" }}
               >
-                See All
+                {showAll ? "See Less" : "See All"}
               </Button>
             )}
           </Box>
@@ -222,22 +254,32 @@ const Nearcourt: React.FC<{}> = () => {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              width: "100%", // Ensure the container takes up the full width
             }}
           >
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { sm: "row", xs: "row" },
+                flexDirection: showAll ? "column" : "row",
                 gap: 2,
                 width: "100%",
-                justifyContent: "center",
+                overflowX: showAll ? "visible" : "auto",
+                justifyContent: showAll ? "flex-start" : "center",
+                alignItems: "center",
+                padding: showAll ? 0 : "0 10px",
+                whiteSpace: showAll ? "normal" : "nowrap",
+                scrollBehavior: "smooth",
               }}
             >
-              {visibleCourts.map((court) => (
+              {court.slice(0, showAll ? court.length : 2).map((court) => (
                 <Link
                   to={`/courtdetails/${court._id}`}
                   key={court._id}
-                  style={{ textDecoration: "none" }}
+                  style={{
+                    textDecoration: "none",
+                    display: "inline-block",
+                    width: showAll ? "100%" : "auto",
+                  }}
                 >
                   <Courtcard
                     rating={court.rating}
@@ -250,7 +292,6 @@ const Nearcourt: React.FC<{}> = () => {
                 </Link>
               ))}
             </Box>
-
           </Box>
         </Box>
       </Box>
