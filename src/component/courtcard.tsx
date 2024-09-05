@@ -25,8 +25,8 @@ const Courtcard: React.FC<CourtcardProps> = ({
     <Card
       sx={{
         bgcolor: "#D9D9D9",
-        width: "300px", // Reduced width
-        height: "150px", // Reduced height
+        width: { sm: "300px", xs: "300px" }, // Width adjusted for mobile
+        height: { sm: "200px", xs: "150px" }, // Height adjusted for mobile
         mr: 3,
         p: 2,
         display: "flex",
@@ -39,9 +39,9 @@ const Courtcard: React.FC<CourtcardProps> = ({
         src={image}
         alt={title}
         sx={{
-          width: "35%", // Reduced image width
-          height: "100%",
-          objectFit: "cover",
+          width: { sm: "45%", xs: "40%" }, // Adjusted width to fit better in the card
+          height: "100%", // Image height matches the card's height
+          objectFit: "cover", // Ensures the image covers its container while maintaining aspect ratio
           borderRadius: 3,
         }}
       />
@@ -61,7 +61,7 @@ const Courtcard: React.FC<CourtcardProps> = ({
       >
         {/* Rating */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <GradeIcon sx={{ color: "orange", fontSize: "18px", mr: 1 }} />
+          <GradeIcon sx={{ color: "orange", fontSize: {sm:"18px",xs:"12px"}, mr: 1 }} />
           <Typography
             sx={{
               color: "black",
@@ -88,11 +88,11 @@ const Courtcard: React.FC<CourtcardProps> = ({
 
         {/* Description */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <LocationOnIcon sx={{ fontSize: 16, color: "#0a0a0a" }} />
+          <LocationOnIcon sx={{ fontSize:{sm: 16,xs:10}, color: "#0a0a0a" }} />
           <Typography
             variant="body2"
             color="#0a0a0a"
-            sx={{ fontWeight: "bold", ml: 1, fontSize: "12px" }}
+            sx={{ fontWeight: "bold", ml: 1, fontSize: {sm:"12px",xs:"10px"} }}
           >
             {description}
           </Typography>
@@ -113,7 +113,7 @@ const Courtcard: React.FC<CourtcardProps> = ({
         <Typography
           variant="body2"
           color="#0a0a0a"
-          sx={{ textAlign: "left", fontWeight: "bold", mt: "auto" }}
+          sx={{ textAlign: "left", fontWeight: "bold", mt: "auto" , fontSize:{ sm: "12px", xs: "10px" }}}
         >
           {price}
         </Typography>
