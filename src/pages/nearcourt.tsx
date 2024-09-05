@@ -25,6 +25,7 @@ interface Court {
 const Nearcourt: React.FC<{}> = () => {
   const [court, setCourt] = useState<Court[]>([]);
   const [showAllNearLocation, setShowAllNearLocation] = useState(false);
+  const [showAllAllCourts, setShowAllAllCourts] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [location, setLocation] = useState("");
@@ -59,7 +60,10 @@ const Nearcourt: React.FC<{}> = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+  
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -126,6 +130,248 @@ const Nearcourt: React.FC<{}> = () => {
               Watadeniya, Gampola
             </Typography>
           </Box>
+          <Box
+            sx={{
+              width: { sm: "60%", xs: "85%" },
+              height: { sm: "auto", xs: "auto" },
+              marginTop: 3,
+              marginLeft: { sm: 2, xs: "0%" },
+              marginRight: { sm: 0, xs: "auto" },
+              textAlign: "center",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={handleClick}
+              sx={{
+                bgcolor: "#0F3D3E",
+                "&:hover": {
+                  bgcolor: "#0F3D3E",
+                },
+                width: { sm: "100%", xs: "100%" },
+                borderRadius:"80px",
+              }}
+            >
+              Find the available time
+            </Button>
+            <Popover
+  id={id}
+  open={open}
+  anchorEl={anchorEl}
+  onClose={handleClosePopover}
+  anchorOrigin={{
+    vertical: "bottom",
+    horizontal: "center",
+  }}
+  PaperProps={{
+    sx: {
+      width: { xs: '100%', sm: '100%' }, // Fullscreen on desktop
+      height: { xs: 'auto', sm: '100%' }, // Fullscreen height on desktop
+      position: { xs: 'absolute', sm: 'absolute' }, // Position absolute for full-screen
+      top: 0, // Start at the top
+      left: 0, // Align to the left side
+      right: 0, // Align to the right side
+      bottom: 0, // Align to the bottom
+    },
+  }}
+>
+  <Box
+     sx={{
+      width: { sm: '100%', xs: '100%' }, // Full width in desktop and mobile
+      p: 3,
+      textAlign: 'left',
+      height: '100%', // Full height in desktop
+   
+    }}
+  >
+    <Box
+      sx={{
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+        mb: 3,
+        flexDirection: "column",
+      
+      }}
+    >
+      <Box
+        sx={{
+          bgcolor: "#f0ede3",
+          height: { sm: "20%", xs: "30%" },
+          width: { sm: "25%", xs: "70%" },
+          borderRadius: 10,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center", // Center the text vertically
+          textAlign: "center", // Ensure the text is centered
+          padding: 1, // Optional: add padding for a better look
+        
+        }}
+      >
+        <Typography sx={{  fontSize:{sm:"16px",xs:"12px"}}}>Find the Available Time</Typography>
+      </Box>
+      <br />
+      
+      {/* Search Bar inside the Popover */}
+      <Box
+        sx={{
+          textAlign: "center",
+          mt: 2,
+          width: { sm: "25%", xs: "270px" },
+          bgcolor: "#f2f2f3",
+          borderRadius: "10px", // Set border radius to 10
+        
+        }}
+      >
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon sx={{  fontSize:{sm:"26px",xs:"12px"}}}/>
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Gampola"
+            inputProps={{ "aria-label": "search" }}
+            sx={{  fontSize:{sm:"16px",xs:"12px"}}}
+          />
+        </Search>
+      </Box>
+      <br />
+
+      <Box
+  sx={{
+    p: 4,
+    display: "flex",
+    flexDirection: "column",
+    height: "50%", // Inner box height less than popup
+    overflowY: "auto", // Adds scroll if content overflows
+    bgcolor: "#f0ede3",
+    borderRadius: 10,
+    boxShadow: 3,
+    '@media (max-width: 600px)': { // Mobile view
+      p: 2,
+      height: "auto",
+    }
+  }}
+>
+<Box
+  sx={{
+    display: "flex",
+    flexDirection: "row",
+    gap: 2,
+    mb: 2,
+   
+    flexWrap: 'wrap', // Allows wrapping on smaller screens
+  }}
+>
+  <Typography
+    sx={{
+      fontWeight: "bold",
+      fontSize: { sm: "15px", xs: "12px" },
+    }}
+  >
+    Check-in
+  </Typography>
+  <DatePicker
+    value={checkInDate}
+    onChange={(newValue) => setCheckInDate(newValue)}
+    sx={{
+      bgcolor: "#d9d9d9",
+      fontSize: { sm: "14px", xs: "11px" }, // Adjust font size for mobile
+      '& .MuiInputBase-input': {
+        fontSize: { sm: "14px", xs: "12px" }, // Adjust input font size for mobile
+      }
+    }}
+  />
+</Box>
+
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      gap: 2,
+      mb: 2,
+      flexWrap: 'wrap', // Allows wrapping on smaller screens
+    }}
+  >
+    <Typography
+      sx={{
+        fontWeight: "bold",
+        fontSize: { sm: "15px", xs: "12px" },
+      }}
+    >
+      Check-in
+    </Typography>
+    <TimePicker
+      value={checkInTime}
+      onChange={(newValue) => setCheckInTime(newValue)}
+      ampm={true}
+      format="hh:mm A"
+      sx={{
+        bgcolor: "#d9d9d9",
+        fontSize: { sm: "14px", xs: "12px" }, // Adjust font size for mobile
+        '& .MuiInputBase-input': {
+          fontSize: { sm: "14px", xs: "12px" }, // Adjust input font size for mobile
+        }
+      }}
+    />
+  </Box>
+
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      gap: 1,
+      flexWrap: 'wrap', // Allows wrapping on smaller screens
+    }}
+  >
+    <Typography
+      sx={{
+        fontWeight: "bold",
+        fontSize: { sm: "15px", xs: "12px" },
+      }}
+    >
+      Check-out
+    </Typography>
+    <TimePicker
+      value={checkOutTime}
+      onChange={(newValue) => setCheckOutTime(newValue)}
+      ampm={true}
+      format="hh:mm A"
+      sx={{
+        bgcolor: "#d9d9d9",
+        fontSize: { sm: "14px", xs: "12px" }, // Adjust font size for mobile
+        '& .MuiInputBase-input': {
+          fontSize: { sm: "14px", xs: "12px" }, // Adjust input font size for mobile
+        }
+      }}
+    />
+  </Box>
+</Box>
+
+      <Button
+        href="/bookingsummary"
+        variant="contained"
+        sx={{
+          mt: 2,
+          borderRadius: 10,
+          bgcolor: "#0F3D3E",
+          "&:hover": {
+            bgcolor: "#0F3D3E",
+          },
+        }}
+        onClick={handleClosePopover}
+      >
+        Show the court
+      </Button>
+    </Box>
+  </Box>
+</Popover>
+
+
+
+
+          </Box>
+          <br />
           <Box sx={{ mt: 2, textAlign: "left" }}>
             <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
               Welcome to the Future of Futsal
@@ -184,70 +430,49 @@ const Nearcourt: React.FC<{}> = () => {
               width: "100%",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: showAllNearLocation ? "column" : "row",
-                gap: 2,
-                width: "100%",
-                overflowX: showAllNearLocation ? "visible" : "auto",
-                justifyContent: showAllNearLocation ? "flex-start" : "center",
-                alignItems: "center",
-                padding: showAllNearLocation ? 0 : "0 10px",
-                whiteSpace: showAllNearLocation ? "normal" : "nowrap",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {court
-                .slice(0, showAllNearLocation ? court.length : 2)
-                .map((court) => (
-                  <Link
-                    to={`/courtdetails/${court._id}`}
-                    key={court._id}
-                    style={{
-                      textDecoration: "none",
-                      display: "inline-block",
-                      width: showAllNearLocation ? "100%" : "auto",
-                    }}
-                  >
-                    <Courtcard
-                      rating={court.rating}
-                      link={`/courtdetails/${court._id}`}
-                      title={court.futsalName}
-                      description={court.address}
-                      price={`$ ${court.dayRate}`}
-                      image={court.fileName?.url}
-                    />
-                  </Link>
-                ))}
-            </Box>
+
+<Box
+  sx={{
+    display: "flex",
+    flexDirection: showAllNearLocation ? "column" : "row",
+    gap: 2,
+    width: "100%",
+    overflowX: showAllNearLocation ? "visible" : "auto",
+    justifyContent: showAllNearLocation ? "flex-start" : "center",
+    alignItems: "center",
+    padding: showAllNearLocation ? 0 : "0 10px",
+    whiteSpace: showAllNearLocation ? "normal" : "nowrap",
+    scrollBehavior: "smooth",
+  }}
+>
+  {court
+    .slice(0, showAllNearLocation ? 3 : 2 )
+    .map((court) => (
+      <Link
+        to={`/courtdetails/${court._id}`}
+        key={court._id}
+        style={{
+          textDecoration: "none",
+          display: "inline-block",
+          width: showAllNearLocation ? "100%" : "auto",
+        }}
+      >
+        <Courtcard
+          rating={court.rating}
+          link={`/courtdetails/${court._id}`}
+          title={court.futsalName}
+          description={court.address}
+          price={`$ ${court.dayRate}`}
+          image={court.fileName?.url}
+        />
+      </Link>
+    ))}
+</Box>
+
           </Box>
 
           <br />
-          <Box
-            sx={{
-              textAlign: "left",
-              display: "flex",
-              flexDirection: "row",
-              gap: { sm: 32, xs: 15 },
-              width: { sm: "450px", xs: "350px" },
-            }}
-          >
-            <Typography
-              sx={{ fontWeight: "bold", fontSize: { sm: "17px", xs: "13px" } }}
-            >
-              All courts
-            </Typography>
-
-            {court.length > 2 && (
-              <Button
-                onClick={() => setShowAll(!showAll)}
-                sx={{ textTransform: "none", color: "#007EF2" }}
-              >
-                {showAll ? "See Less" : "See All"}
-              </Button>
-            )}
-          </Box>
+     
           <Box
             sx={{
               display: "flex",
@@ -257,41 +482,70 @@ const Nearcourt: React.FC<{}> = () => {
               width: "100%", // Ensure the container takes up the full width
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: showAll ? "column" : "row",
-                gap: 2,
-                width: "100%",
-                overflowX: showAll ? "visible" : "auto",
-                justifyContent: showAll ? "flex-start" : "center",
-                alignItems: "center",
-                padding: showAll ? 0 : "0 10px",
-                whiteSpace: showAll ? "normal" : "nowrap",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {court.slice(0, showAll ? court.length : 2).map((court) => (
-                <Link
-                  to={`/courtdetails/${court._id}`}
-                  key={court._id}
-                  style={{
-                    textDecoration: "none",
-                    display: "inline-block",
-                    width: showAll ? "100%" : "auto",
-                  }}
-                >
-                  <Courtcard
-                    rating={court.rating}
-                    link={`/courtdetails/${court._id}`}
-                    title={court.futsalName}
-                    description={court.address}
-                    price={`$ ${court.dayRate}`}
-                    image={court.fileName?.url}
-                  />
-                </Link>
-              ))}
-            </Box>
+<Box
+  sx={{
+    textAlign: "left",
+    display: "flex",
+    flexDirection: "row",
+    gap: { sm: 32, xs: 15 },
+    width: { sm: "450px", xs: "350px" },
+  }}
+>
+  <Typography
+    sx={{ fontWeight: "bold", fontSize: { sm: "17px", xs: "13px" } }}
+  >
+    All courts
+  </Typography>
+
+  {court.length > 2 && (
+    <Button
+      onClick={() => setShowAllAllCourts(!showAllAllCourts)}
+      sx={{ textTransform: "none", color: "#007EF2" }}
+    >
+      {showAllAllCourts ? "See Less" : "See All"}
+    </Button>
+  )}
+</Box>
+<Box
+  sx={{
+    display: "flex",
+    flexDirection: showAllAllCourts ? "column" : "row",
+    gap: 2,
+    width: "100%",
+    overflowX: showAllAllCourts ? "visible" : "auto",
+    justifyContent: showAllAllCourts ? "flex-start" : "center",
+    alignItems: "center",
+    padding: showAllAllCourts ? 0 : "0 10px",
+    whiteSpace: showAllAllCourts ? "normal" : "nowrap",
+    scrollBehavior: "smooth",
+  }}
+>
+  {court
+    .slice(0, showAllAllCourts ? 3 : 2)
+    .map((court) => (
+      <Link
+        to={`/courtdetails/${court._id}`}
+        key={court._id}
+        style={{
+          textDecoration: "none",
+          display: "inline-block",
+          width: showAllAllCourts ? "100%" : "auto",
+        }}
+      >
+        <Courtcard
+          rating={court.rating}
+          link={`/courtdetails/${court._id}`}
+          title={court.futsalName}
+          description={court.address}
+          price={`$ ${court.dayRate}`}
+          image={court.fileName?.url}
+        />
+      </Link>
+    ))}
+</Box>
+
+
+
           </Box>
         </Box>
       </Box>
