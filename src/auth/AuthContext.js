@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AuthContext = createContext();
 
@@ -52,45 +53,98 @@ export const AuthProvider = ({ children }) => {
         }
       );
 
+      // Store token and set login state
       setAuthToken(response.data.access_token);
       localStorage.setItem("authToken", response.data.access_token); // Store token in local storage
-      // const userInfo = await axios.get(
-      //   `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${response.data.access_token}`,
-      //     },
-      //   }
-      // );
-
-      // setUser(userInfo.data);
       setIsLoggedIn(true); // Set isLoggedIn to true after successful login
+
+      // SweetAlert for successful login
+      Swal.fire({
+        title: "Login Successful!",
+        text: "You have successfully logged in.",
+        icon: "success",
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#0F3D3E", // Button color
+      });
     } catch (error) {
-      setError(error.response ? error.response.data : "An error occurred");
+      // Check for specific "invalid_grant" error
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error === "invalid_grant"
+      ) {
+        // SweetAlert for invalid credentials
+        Swal.fire({
+          title: "Login Failed",
+          text: "Wrong email or password. Please try again.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#F27474", // Error button color
+        });
+      } else {
+        // SweetAlert for any other errors
+        Swal.fire({
+          title: "Login Error",
+          text:
+            error.response?.data?.error_description ||
+            "An error occurred. Please try again.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#F27474",
+        });
+      }
     }
   };
 
   const signup = async (email, password, phoneNumber, username) => {
     try {
-      // Example: Registering user with Auth0
+      // Call the backend API to sign up
       const response = await axios.post(
-        `https://${process.env.REACT_APP_AUTH0_DOMAIN}/dbconnections/signup`,
+        `${process.env.REACT_APP_API_URL}/api/auth/signup`,
         {
-          client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           email,
           password,
-          user_metadata: {
-            phone_number: phoneNumber,
-            username: username,
-          },
-          connection: "futsalApplications", // Replace with your Auth0 connection type
+          phone: phoneNumber,
+          username,
         }
       );
 
-      // Optionally handle response or set user state after signup
+      console.log(response);
+      // SweetAlert for successful sign-up
+      Swal.fire({
+        title: "Sign-Up Successful!",
+        text: "Your account has been created successfully.",
+        icon: "success",
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#0F3D3E", // Button color
+      });
+
       console.log("Signup successful:", response.data);
     } catch (error) {
-      setError(error.response ? error.response.data : "An error occurred");
+      const errorMessage =
+        error.response?.data?.message || "An error occurred during sign-up.";
+
+      // SweetAlert for errors
+      if (errorMessage === "User already exists") {
+        Swal.fire({
+          title: "User Already Exists",
+          text: "An account with this email already exists. Please log in or use another email.",
+          icon: "warning",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#F27474", // Warning button color
+        });
+      } else {
+        Swal.fire({
+          title: "Sign-Up Failed",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#F27474", // Error button color
+        });
+      }
+
+      // Optionally set the error state
+      setError(errorMessage);
     }
   };
 
