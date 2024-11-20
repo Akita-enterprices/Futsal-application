@@ -149,9 +149,18 @@ export const AuthProvider = ({ children }) => {
       );
 
       // Store token and set login state
-      const token = response.data.access_token;
-      setAuthToken(token);
-      await userDetails(token);
+      setAuthToken(response.data.access_token);
+      localStorage.setItem("authToken", response.data.access_token); // Store token in local storage
+      setIsLoggedIn(true); // Set isLoggedIn to true after successful login
+
+      // SweetAlert for successful login
+      Swal.fire({
+        title: "Login Successful!",
+        text: "You have successfully logged in.",
+        icon: "success",
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#0F3D3E", // Button color
+      });
     } catch (error) {
       // Check for specific "invalid_grant" error
       if (
@@ -211,11 +220,10 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, phoneNumber, username) => {
     try {
-      // Example: Registering user with Auth0
+      // Call the backend API to sign up
       const response = await axios.post(
-        `https://${process.env.REACT_APP_AUTH0_DOMAIN}/dbconnections/signup`,
+        `${process.env.REACT_APP_API_URL}/api/auth/signup`,
         {
-          client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           email,
           password,
           user_metadata: {
