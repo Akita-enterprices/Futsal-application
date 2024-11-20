@@ -12,21 +12,22 @@ import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import Image2 from '../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg'; // Import your background image
+import Image2 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg"; // Import your background image
 
 const Createaccount: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const navigate = useNavigate();
+
   const { signup } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await signup(email, password, phone, username);
-      navigate("/verifyaccount", { state: { phone } });
+      navigate("/nearcourt");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -65,27 +66,30 @@ const Createaccount: React.FC<{}> = () => {
         }}
       >
         <Typography
-          sx={{ fontSize: { sm: "30px", xs: "20px", }, fontWeight: "bold", mb: 2 }}
+          sx={{
+            fontSize: { sm: "30px", xs: "20px" },
+            fontWeight: "bold",
+            mb: 2,
+          }}
         >
-         Get’s Started
+          Get’s Started
         </Typography>
 
         <Typography
           sx={{
-            fontSize: { sm: "15px", xs: "14px",color:"grey" },
+            fontSize: { sm: "15px", xs: "14px", color: "grey" },
             padding: { sm: 0, xs: 3 },
             mb: 2,
           }}
         >
-        Get started now and unlock exclusive 
-benefits tailored just for you!
+          Get started now and unlock exclusive benefits tailored just for you!
         </Typography>
 
         <form onSubmit={handleSubmit}>
           <Box>
-          <Typography sx={{  textAlign: "center", mb: 2 }}>
-            _____________ or ____________
-          </Typography>
+            <Typography sx={{ textAlign: "center", mb: 2 }}>
+              _____________ or ____________
+            </Typography>
             <TextField
               placeholder="User name"
               type="text"
@@ -174,8 +178,6 @@ benefits tailored just for you!
           >
             Continue
           </Button>
-
-         
         </form>
 
         <Typography sx={{ color: "grey", "& a": { color: "#0F3D3E" } }}>

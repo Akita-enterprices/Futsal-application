@@ -17,11 +17,13 @@ import {
 } from "@stripe/react-stripe-js";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
 const Payment: React.FC<{}> = () => {
+  const location = useLocation();
+  const { totalAmount } = location.state || {};
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -47,12 +49,14 @@ const Payment: React.FC<{}> = () => {
     setLoading(true);
 
     try {
+      const amountInCents = totalAmount * 100;
+
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/payments/create-payment-intent`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: 353500, currency: "LKR" }),
+          body: JSON.stringify({ amount: amountInCents, currency: "LKR" }),
         }
       );
 
@@ -159,7 +163,7 @@ const Payment: React.FC<{}> = () => {
             textAlign: "center",
           }}
         >
-          RS 3535/=
+          RS {totalAmount}
         </Typography>
         <Typography textAlign="center" sx={{ opacity: "60%" }}>
           5% VAT included

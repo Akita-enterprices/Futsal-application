@@ -13,12 +13,13 @@ import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import Image2 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg"; // Background image
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +27,12 @@ const Login: React.FC<{}> = () => {
     navigate("/nearcourt");
     setEmail("");
     setPassword("");
+  };
+
+  const handleGoogleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await googleLogin();
+    console.log("success");
   };
 
   return (
@@ -136,6 +143,26 @@ const Login: React.FC<{}> = () => {
               }}
             >
               Continue
+            </Button>
+            <Button
+              onClick={handleGoogleLogin}
+              variant="outlined"
+              fullWidth
+              startIcon={<GoogleIcon />}
+              sx={{
+                borderRadius: 2,
+                mb: 2,
+                bgcolor: "#0F3D3E",
+                color: "white",
+                borderColor: "#DADCE0",
+                "&:hover": {
+                  bgcolor: "#F5F5F5",
+                  color: "black",
+                  borderColor: "#DADCE0",
+                },
+              }}
+            >
+              Sign in with Google
             </Button>
 
             <Typography
