@@ -7,7 +7,7 @@ import GradeIcon from "@mui/icons-material/Grade";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import PoolIcon from "@mui/icons-material/Pool";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
@@ -42,15 +42,15 @@ const Courtdetails: React.FC<{}> = () => {
   const [checkOutTime, setCheckOutTime] = useState<Dayjs | null>(dayjs());
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const id = open ? "simple-popover" : undefined;
-  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const fetchCourtDetails = async () => {
       try {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/api/admin/${courtId}`
-        ); // Replace with your actual API endpoint for court details
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch court details");
         }
@@ -72,30 +72,26 @@ const Courtdetails: React.FC<{}> = () => {
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
   };
-  const handleOpenPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     setAnchorEl(null);
+
+    navigate("/bookingsummary", {
+      state: {
+        checkInDate: checkInDate ? checkInDate.format("YYYY-MM-DD") : "N/A", // Fallback if null
+        checkInTime: checkInTime ? checkInTime.format("HH:mm") : "N/A", // Fallback if null
+        checkOutTime: checkOutTime ? checkOutTime.format("HH:mm") : "N/A", // Fallback if null
+        amount: 3500,
+        tax: 35,
+        total: 3535,
+      },
+    });
   };
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleClickOpen2 = () => {
-    setDialogOpen(true);
-  };
-
-  const handleClose2 = () => {
-    setDialogOpen(false);
-  };
   if (!data) {
     return (
       <Box
@@ -119,9 +115,6 @@ const Courtdetails: React.FC<{}> = () => {
     { icon: <WifiIcon sx={{ mr: 1 }} />, name: "Cafeteria Access" }, // Additional items
   ];
 
-  const toggleShowMore = () => {
-    setShowMore((prevShowMore) => !prevShowMore);
-  };
   const displayedFacilities = seeAll ? facilities : facilities.slice(0, 4); // Show 4 initially
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

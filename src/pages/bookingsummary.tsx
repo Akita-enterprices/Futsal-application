@@ -3,10 +3,26 @@ import { Box, IconButton, Typography, Button } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Bookingsummary: React.FC<{}> = () => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { checkInDate, checkInTime, checkOutTime, amount, tax, total } =
+    state || {};
+
   const goBack = () => {
     window.history.back();
+  };
+
+  const handlePaymentNavigation = () => {
+    const totalAmount = total; // Replace this with your dynamic total amount
+
+    navigate("/payment", {
+      state: {
+        totalAmount, // Send the total amount as state
+      },
+    });
   };
   return (
     <Box
@@ -127,38 +143,37 @@ const Bookingsummary: React.FC<{}> = () => {
         </Box>
         <Box sx={{ opacity: "40%" }}>
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            1-Oct-2023
+            {checkInDate}
           </Typography>
 
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            24-Oct-2023
+            {checkInTime}
           </Typography>
 
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            26-Oct-2023
+            {checkOutTime}
           </Typography>
         </Box>
       </Box>
       <Box
-  sx={{
-    width: { sm: "45%", xs: "90%" },
-    display: "flex",
-    justifyContent: "center", // Center horizontally
-    alignItems: "center", // Center vertically
-    textAlign: "center", // Align text center to center the <hr>
-    ml: { xs: 2, sm: 42 },
-    my: 2, // Add vertical margin for spacing
-  }}
->
-  <hr
-    style={{
-      width: "100%", // Set the width of the <hr> to 100%
-      border: "none", // Remove default border
-      borderTop: "1px solid #ccc", // Add a light border for visibility
-    }}
-  />
-</Box>
-
+        sx={{
+          width: { sm: "45%", xs: "90%" },
+          display: "flex",
+          justifyContent: "center", // Center horizontally
+          alignItems: "center", // Center vertically
+          textAlign: "center", // Align text center to center the <hr>
+          ml: { xs: 2, sm: 42 },
+          my: 2, // Add vertical margin for spacing
+        }}
+      >
+        <hr
+          style={{
+            width: "100%", // Set the width of the <hr> to 100%
+            border: "none", // Remove default border
+            borderTop: "1px solid #ccc", // Add a light border for visibility
+          }}
+        />
+      </Box>
 
       <br />
       <Box
@@ -191,15 +206,15 @@ const Bookingsummary: React.FC<{}> = () => {
         </Box>
         <Box sx={{ opacity: "40%" }}>
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            3500
+            {amount}
           </Typography>
 
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            35
+            {tax}
           </Typography>
 
           <Typography sx={{ fontSize: { sm: "18px", xs: "13px" }, mb: 1 }}>
-            3535/=
+            {total}
           </Typography>
         </Box>
       </Box>
@@ -231,6 +246,7 @@ const Bookingsummary: React.FC<{}> = () => {
             borderRadius: 2,
             mb: 2,
           }}
+          onClick={handlePaymentNavigation}
         >
           Continue to payment
         </Button>
