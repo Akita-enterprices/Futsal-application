@@ -1,133 +1,85 @@
-import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Keypad from "../component/keypad";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, CircularProgress, Button } from "@mui/material";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Verifyaccount: React.FC<{}> = () => {
-  const [code, setCode] = useState<string[]>(["", "", "", ""]);
+  const [searchParams] = useSearchParams();
+  const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  const goBack = () => {
-    window.history.back();
-  };
+  useEffect(() => {
+    const token = searchParams.get("token");
 
-  const handleDigitClick = (digit: string) => {
-    const newCode = [...code];
-    for (let i = 0; i < newCode.length; i++) {
-      if (newCode[i] === "") {
-        newCode[i] = digit;
-        break;
-      }
+    if (token) {
+      axios
+        .get(`http://localhost:4000/api/auth/verify-email?token=${token}`)
+        .then((res) => {
+          setStatus("success");
+          setMessage(res.data.message);
+        })
+        .catch((err) => {
+          setStatus("error");
+          setMessage(err.response?.data?.message || "Verification failed.");
+        });
+    } else {
+      setStatus("error");
+      setMessage("Token not found in URL.");
     }
-    setCode(newCode);
-  };
-
-  const handleCloseClick = () => {
-    const newCode = [...code];
-    for (let i = newCode.length - 1; i >= 0; i--) {
-      if (newCode[i] !== "") {
-        newCode[i] = "";
-        break;
-      }
-    }
-    setCode(newCode);
-  };
-
-  const handleCodeChange =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newCode = [...code];
-      newCode[index] = event.target.value;
-      setCode(newCode);
-    };
+  }, [searchParams]);
 
   return (
     <Box
       sx={{
-        height: { sm: "100vh", xs: "120vh" },
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         bgcolor: "#f9f8fd",
-        color: "black",
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-        maxWidth: "100%",
+        textAlign: "center",
+        px: 2,
       }}
     >
-      <Box
-        sx={{
-          width: { sm: "42%", xs: "90%" },
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "left",
-          alignItems: "left",
-        }}
-      >
-        <ArrowBackIcon
-          onClick={goBack}
-          sx={{ color: "#007EF2", cursor: "pointer" }}
-        />
-      </Box>
-      <Typography
-        sx={{ fontSize: { sm: "30px", xs: "20px" }, fontWeight: "bold" }}
-      >
-        <span style={{ color: "black" }}>Verify</span>{" "}
-        <span style={{ color: "#E2DCC8" }}>Account</span>
-      </Typography>
-      <Typography sx={{ opacity: "55%", textAlign: "center" }}>
-        Please enter the verification code sent to example@gmail.com
-      </Typography>
-      <br />
+      {status === "verifying" && (
+        <>
+          <CircularProgress />
+          <Typography mt={2}>Verifying your account...</Typography>
+        </>
+      )}
 
-      <Box display={"flex"} flexDirection={"row"} mb={2}>
-        {code.map((digit, index) => (
-          <TextField
-            key={index}
-            type="text"
-            value={digit}
-            onChange={handleCodeChange(index)}
-            inputProps={{ maxLength: 1 }}
-            sx={{
-              mr: 2,
-              width: { sm: "50px", xs: "50px" },
-              maxWidth: "100%",
-              textAlign: "center",
-            }}
-          />
-        ))}
-      </Box>
-      <Typography sx={{ color: "grey", "& a": { color: "yellow" } }}>
-        Didn't receive code?
-        <a href="example">Resend again</a>
-      </Typography>
-      <br />
+      {status === "success" && (
+        <>
+          <Typography variant="h5" color="green">{message}</Typography>
+          <Button
+            onClick={() => navigate("/login")}
+            variant="contained"
+            sx={{ mt: 3, bgcolor: "#0F3D3E" }}
+          >
+            Go to Login
+          </Button>
+        </>
+      )}
 
-      <Button
-        type="submit"
-        variant="contained"
-        href="/nearcourt"
-        sx={{
-          bgcolor: "#0F3D3E",
-          "&:hover": {
-            bgcolor: "#0F3D3E",
-          },
-          width: {
-            sm: "25%",
-            xs: "50%",
-          },
-          borderRadius: 2,
-          mb: 2,
-        }}
-      >
-        Verify
-      </Button>
-      <br />
-      <Keypad onDigitClick={handleDigitClick} onCloseClick={handleCloseClick} />
+      {status === "error" && (
+        <>
+          <Typography variant="h5" color="red">{message}</Typography>
+          <Button
+            onClick={() => navigate("/signup")}
+            variant="contained"
+            sx={{ mt: 3, bgcolor: "#0F3D3E" }}
+          >
+            Go Back to Signup
+          </Button>
+        </>
+      )}
     </Box>
   );
 };
 
 export default Verifyaccount;
+
 
 // import React, { useState } from "react";
 // import { Box, Button, TextField, Typography } from "@mui/material";

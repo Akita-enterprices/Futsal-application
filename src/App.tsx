@@ -6,6 +6,8 @@ import Futureoffutsal from "./pages/Futureoffutsal";
 import Createaccount from "./pages/createaccount";
 import Login from "./pages/login";
 import Verifyaccount from "./pages/verifyaccount";
+import EmailSent from "./pages/email-sent";
+import EmailVerified from "./pages/EmailVerified";
 import Forgotpassword from "./pages/forgotpassword";
 import Welcome from "./pages/welcome";
 import Nearcourt from "./pages/nearcourt";
@@ -40,7 +42,8 @@ const App: React.FC = () => {
             <Route path="/Futureoffutsal" element={<Futureoffutsal />} />
             <Route path="/createaccount" element={<Createaccount />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/verifyaccount" element={<Verifyaccount />} />
+            <Route path="/email-sent" element={<EmailSent />} />
+            <Route path="/email-verified" element={<EmailVerified />} />
             <Route path="/forgotpassword" element={<Forgotpassword />} />
             <Route
               path="/welcome"
