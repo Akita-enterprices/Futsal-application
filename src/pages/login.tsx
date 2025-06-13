@@ -10,29 +10,38 @@ import {
 } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
-import Image2 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg"; // Background image
+import GoogleIcon from "@mui/icons-material/Google";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import GoogleIcon from "@mui/icons-material/Google";
+import Image2 from "../Asset/_b3ab286a-7bdc-4643-b89a-90940be5e5e0.jpg";
 
-const Login: React.FC<{}> = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { login, googleLogin } = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
-    navigate("/nearcourt");
-    setEmail("");
-    setPassword("");
+    try {
+      await login(username, password);
+      navigate("/nearcourt");
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   const handleGoogleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    await googleLogin();
-    console.log("success");
+    try {
+      await googleLogin();
+      console.log("Google login success");
+    } catch (error) {
+      console.error("Google login failed:", error);
+    }
   };
 
   return (
@@ -44,7 +53,7 @@ const Login: React.FC<{}> = () => {
         justifyContent: "center",
         alignItems: "center",
         bgcolor: "#f9f8fd",
-        backgroundImage: `url(${Image2})`, // Background image from the second code
+        backgroundImage: `url(${Image2})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -57,7 +66,7 @@ const Login: React.FC<{}> = () => {
           p: 2,
           boxShadow: 3,
           borderRadius: 10,
-          backgroundColor: "rgba(255, 255, 255, 0.8)", // Card view from the second code
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
         }}
       >
         <CardContent>
@@ -89,10 +98,9 @@ const Login: React.FC<{}> = () => {
                 _____________ or ____________
               </Typography>
               <TextField
-                placeholder="Email address"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email or NIC/Passport"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 sx={{ mb: 2, width: "100%" }}
                 InputProps={{
@@ -123,10 +131,9 @@ const Login: React.FC<{}> = () => {
               />
             </Box>
 
-            <Typography sx={{ opacity: "35%", textAlign: "left" }}>
-              <a href="/forgotpassword">Forgot password</a>
+            <Typography sx={{ opacity: "35%", textAlign: "left", mb: 2 }}>
+              <a href="/forgotpassword">Forgot password?</a>
             </Typography>
-            <br />
 
             <Button
               type="submit"
@@ -134,8 +141,8 @@ const Login: React.FC<{}> = () => {
               sx={{
                 bgcolor: "#0F3D3E",
                 "&:hover": { bgcolor: "#0F3D3E" },
-                width: "50%", // Login button styled as the second code
-                mx: "auto", // Centered horizontally
+                width: "50%",
+                mx: "auto",
                 display: "block",
                 borderRadius: 2,
                 textAlign: "center",
@@ -144,6 +151,7 @@ const Login: React.FC<{}> = () => {
             >
               Continue
             </Button>
+
             <Button
               onClick={handleGoogleLogin}
               variant="outlined"
@@ -173,7 +181,7 @@ const Login: React.FC<{}> = () => {
                 textAlign: "center",
               }}
             >
-              Does not have an account? <a href="/createaccount">Sign Up</a>
+              Don't have an account? <a href="/createaccount">Sign Up</a>
             </Typography>
           </form>
         </CardContent>

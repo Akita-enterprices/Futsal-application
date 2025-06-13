@@ -119,14 +119,14 @@ const Findcourt: React.FC<{}> = () => {
             key={court._id}
             style={{ textDecoration: "none" }}
           >
-            <Courtcard
+            {/* <Courtcard
               rating={court.rating}
-              link={`/courtdetails/${court._id}`}
+              // link={`/courtdetails/${court._id}`}
               title={court.futsalName}
               description={court.address}
-              price={`$ ${court.dayRate}`}
+              // price={`$ ${court.dayRate}`}
               image={court.fileName?.url}
-            />
+            /> */}
           </Link>
         ))}
       </Box>
