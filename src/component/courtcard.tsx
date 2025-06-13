@@ -1,125 +1,119 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import GradeIcon from "@mui/icons-material/Grade";
+import { Box, Typography, Card } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 interface CourtcardProps {
-  rating: number;
-  link: string;
-  title: string;
-  description: string;
-  price: string;
-  image: string;
+  _id: string;
+  futsalName: string;
+  address: string;
+  dayRate: number;
+  nightRate: number;
+  capacity: number;
+  length: number;
+  width: number;
+  specification: string;
+  fileName: { url: string }[];
 }
 
 const Courtcard: React.FC<CourtcardProps> = ({
-  rating,
-  link,
-  title,
-  description,
-  price,
-  image,
-}) => (
-  <Box>
-    <Card
-      sx={{
-        bgcolor: "#D9D9D9",
-        width: { sm: "300px", xs: "300px" }, // Width adjusted for mobile
-        height: { sm: "200px", xs: "150px" }, // Height adjusted for mobile
-        mr: 3,
-        p: 2,
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      {/* Image */}
-      <Box
-        component="img"
-        src={image}
-        alt={title}
-        sx={{
-          width: { sm: "45%", xs: "40%" }, // Adjusted width to fit better in the card
-          height: "100%", // Image height matches the card's height
-          objectFit: "cover", // Ensures the image covers its container while maintaining aspect ratio
-          borderRadius: 3,
-        }}
-      />
+  _id,
+  futsalName,
+  address,
+  dayRate,
+  nightRate,
+  capacity,
+  length,
+  width,
+  specification,
+  fileName,
+}) => {
+  const imageUrl = fileName?.[0]?.url || "/placeholder.jpg";
 
-      {/* Card content */}
-      <Box
-        component="a"
-        href={link}
+  return (
+    <Box>
+      <Card
         sx={{
-          width: "65%", // Adjusted content width
-          height: "100%",
-          ml: 2,
+          bgcolor: "#D9D9D9",
+          width: 300,
+          height: { sm: 200, xs: 160 },
+          mr: 3,
+          p: 2,
           display: "flex",
-          flexDirection: "column",
-          textDecoration: "none",
+          flexDirection: "row",
         }}
       >
-        {/* Rating */}
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <GradeIcon sx={{ color: "orange", fontSize: {sm:"18px",xs:"12px"}, mr: 1 }} />
-          <Typography
-            sx={{
-              color: "black",
-              fontWeight: "bold",
-              fontSize: { sm: "17px", xs: "10px" },
-            }}
-          >
-            {rating}
-          </Typography>
-        </Box>
-
-        {/* Title */}
-        <Typography
+        {/* Image */}
+        <Box
+          component="img"
+          src={imageUrl}
+          alt={futsalName}
           sx={{
-            fontWeight: "bold",
-            textAlign: "left",
-            mb: 1,
-            fontSize: { sm: "13px", xs: "10px" },
-            color: "black",
+            width: "45%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: 2,
+          }}
+        />
+
+        {/* Content */}
+        <Box
+          component="a"
+          href={`/court/${_id}`}
+          sx={{
+            ml: 2,
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            textDecoration: "none",
+            color: "inherit",
           }}
         >
-          {title}
-        </Typography>
-
-        {/* Description */}
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <LocationOnIcon sx={{ fontSize:{sm: 16,xs:10}, color: "#0a0a0a" }} />
+          {/* Futsal Name */}
           <Typography
-            variant="body2"
-            color="#0a0a0a"
-            sx={{ fontWeight: "bold", ml: 1, fontSize: {sm:"12px",xs:"10px"} }}
+            sx={{
+              fontSize: { sm: 14, xs: 11 },
+              fontWeight: 700,
+              mb: 0.5,
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
           >
-            {description}
+            {futsalName}
+          </Typography>
+
+          {/* Address */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 0.5 }}>
+            <LocationOnIcon sx={{ fontSize: { sm: 16, xs: 12 }, color: "#0a0a0a" }} />
+            <Typography
+              sx={{
+                ml: 0.5,
+                fontSize: { sm: 12, xs: 10 },
+                fontWeight: 500,
+              }}
+            >
+              {address}
+            </Typography>
+          </Box>
+
+          {/* Rates */}
+          <Typography sx={{ fontSize: { sm: 12, xs: 10 }, fontWeight: 600 }}>
+            Day: {dayRate}/= | Night: {nightRate}/=
+          </Typography>
+
+          {/* Capacity & Size */}
+          <Typography sx={{ fontSize: { sm: 12, xs: 10 }, fontWeight: 500 }}>
+            Capacity: {capacity}, Size: {length}m x {width}m
+          </Typography>
+
+          {/* Specification */}
+          <Typography sx={{ fontSize: { sm: 12, xs: 10 }, fontStyle: "italic", mt: "auto" }}>
+            Spec: {specification}
           </Typography>
         </Box>
-
-        {/* Day and Night Rates */}
-        <Box sx={{ mb: 1 }}>
-          <Typography
-            fontSize={{ sm: "12px", xs: "10px" }}
-            sx={{ color: "black", mr: 12 }}
-          >
-            <span style={{ fontWeight: "bold" }}>Day: 2500/=</span> <br />
-            <span style={{ fontWeight: "bold" }}>Night: 3000/=</span>
-          </Typography>
-        </Box>
-
-        {/* Price */}
-        <Typography
-          variant="body2"
-          color="#0a0a0a"
-          sx={{ textAlign: "left", fontWeight: "bold", mt: "auto" , fontSize:{ sm: "12px", xs: "10px" }}}
-        >
-          {price}
-        </Typography>
-      </Box>
-    </Card>
-  </Box>
-);
+      </Card>
+    </Box>
+  );
+};
 
 export default Courtcard;

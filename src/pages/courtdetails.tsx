@@ -24,14 +24,29 @@ import TimeSlotList from "../component/TimeSlotList";
 import { timeSlots } from "../data/timeSlotsData";
 
 interface CourtData {
+  _id: string;
   futsalName: string;
-  name: string;
+  idNumber: string;
+  address: string;
   dayRate: number;
   nightRate: number;
-  fileName: { fileName: string; url: string; _id: string };
-
-  // Add other properties as per your data structure
+  capacity: number;
+  length: number;
+  width: number;
+  specification: string;
+  fileName: {
+    _id: string;
+    url: string;
+    filename: string;
+    __v: number;
+  }[];
+  sports: string[];
+  agreeTerms: boolean;
+  isVerified: boolean;
+  verificationToken: string | null;
+  __v: number;
 }
+
 
 const Courtdetails: React.FC<{}> = () => {
   const { courtId } = useParams<{ courtId: string }>();
@@ -49,7 +64,7 @@ const Courtdetails: React.FC<{}> = () => {
     const fetchCourtDetails = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/admin/${courtId}`
+          `${process.env.REACT_APP_API_URL}/api/courts/${courtId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch court details");
@@ -166,7 +181,7 @@ const Courtdetails: React.FC<{}> = () => {
         <br />
         <Box
           component="img"
-          src={data.fileName?.url}
+          src={data.fileName[0]?.url} 
           sx={{
             objectFit: "cover",
             alt: "image",
@@ -266,10 +281,35 @@ const Courtdetails: React.FC<{}> = () => {
                 padding: "0.5rem",
               }}
             />
-            <Typography sx={{ ml: 2, fontSize: { sm: "15px", xs: "12px" } }}>
+            <Box mt={3}>
+  <Typography fontWeight="bold" sx={{ fontSize: { sm: "18px", xs: "14px" } }}>
+    Court Details
+  </Typography>
+  <Typography fontSize={{ sm: "16px", xs: "13px" }}>
+    Capacity: {data.capacity} players
+    <br />
+    Dimensions: {data.length}m x {data.width}m
+    <br />
+    Specification: {data.specification}
+  </Typography>
+</Box>
+<Box mt={3}>
+  <Typography fontWeight="bold" sx={{ fontSize: { sm: "18px", xs: "14px" } }}>
+    Supported Sports
+  </Typography>
+  <Box display="flex" flexWrap="wrap" gap={2} mt={1}>
+    {data.sports.map((sport, index) => (
+      <Typography key={index} sx={{ backgroundColor: "#f0f0f0", p: 1, borderRadius: 2 }}>
+        {sport}
+      </Typography>
+    ))}
+  </Box>
+</Box>
+
+            {/* <Typography sx={{ ml: 2, fontSize: { sm: "15px", xs: "12px" } }}>
               <b>{data.name}</b>
               <br /> Receptionist
-            </Typography>
+            </Typography> */}
             <Card
               sx={{
                 color: "grey",
